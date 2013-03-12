@@ -2,12 +2,11 @@
 #appBg{width: 100%; height: 100%;position: fixed;z-index: -99999;}
 #container{height: 100%;}
 .f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
-h1{font-weight: normal; font-size: 28px; line-height: 28px;}
 /*----------------------------------------------------------*/
 /*	Basic structure
 /*----------------------------------------------------------*/
 #status{
-	height: 75px;
+	height: 65px;
 	white-space: nowrap;
 }
 #tag{
@@ -30,7 +29,7 @@ h1{font-weight: normal; font-size: 28px; line-height: 28px;}
 /*----------------------------------------------------------*/
 #status .app-title{
 	float: left;
-	width: 300px;
+	width: 274px;
 	height: 100%;
 	/*backface-visibilityを有効にするために必要*/
 	-webkit-transform-style: preserve-3d;
@@ -44,7 +43,9 @@ h1{font-weight: normal; font-size: 28px; line-height: 28px;}
 	height: 100%;
 	background: #5D5D5D;
 	text-align: center;
-	line-height: 75px;
+	font-weight: normal;
+	font-size: 23px;
+	line-height: 67px;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 }
@@ -55,9 +56,9 @@ h1{font-weight: normal; font-size: 28px; line-height: 28px;}
 #status .cntbm-total,
 #status .cntbm-crrnt{
 	float: left;
-	padding-left: 30px;
-	padding-top: 20px;
-	font-size: 12px;
+	padding-left: 37px;
+	padding-top: 18px;
+	font-size: 11px;
 }
 #status .cntbm-total dd,
 #status .cntbm-crrnt dd{letter-spacing: 1px;}
@@ -66,24 +67,6 @@ h1{font-weight: normal; font-size: 28px; line-height: 28px;}
 /*----------------------------------------------------------*/
 /*	03.
 /*----------------------------------------------------------*/
-.select-title{
-	height: 72px;
-	font-size: 72px;
-	line-height: 1em;
-	letter-spacing: -2px;
-	text-indent: -4px;
-}
-.rail{
-	position: absolute;
-	left: 0;
-	right: 0;
-	top:72px;
-	bottom:0;
-}
-.rail div{
-	position: absolute;
-	background: gray;
-}
 
 
 

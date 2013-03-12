@@ -24,28 +24,52 @@ console.log(DS);
 			<h1>BOOKMARK TURBO</h1>
 			<h1>hoge</h1>
 		</div>
-		<dl class="cntbm-total"><dt>TOTAL BM</dt><dd>0,000</dd></dl>
-		<dl class="cntbm-crrnt"><dt>MAJOR BM</dt><dd>0,000</dd></dl>
-		<div></div>
+		<dl class="cntbm-total">
+			<dt>TOTAL BM</dt>
+			<dd>0,000</dd>
+		</dl>
+		<dl class="cntbm-crrnt">
+			<dt>MAJOR BM</dt>
+			<dd>0,000</dd>
+		</dl>
+		<div>
+			<p class="clock"></p>
+		</div>
 	</header>
 	<!-- 02. -->
 	<div id="tag">
 	</div>
 	<!-- 03. -->
 	<div id="bookmark">
-		<!--
-		<div class="select-title color-white">
-			<span class="color-white f-Josefin">SELECT BOOK IS...</span>
-			<span class="color-white f-Josefin">NAME</span>
+		<!-- 03-01.BOOKMARK -->
+		<div class="theme-ground">
+			<div class="caption  color-white f-Josefin">
+				<span class="first">BOOKMARKS</span>
+				<span class="second">SELECT BOOK IS...</span>
+				<span class="third">NAME</span>
+			</div>
+			<div class="base-rail">
+				<div class="books parent"></div>
+				<!-- byJs <div id="hoge" class="bookmarks parent"></div>-->
+			</div>
 		</div>
-		<div class="rail">
-			<div></div><div></div><div></div>
-			<div></div><div></div><div></div>
-			<div></div><div></div><div></div>
-			<div></div><div></div><div></div>
-			<div></div><div></div><div></div>
+		<!-- 03-02.SITEMARKS -->
+		<div class="theme-ground">
+			<div class="caption  color-white f-Josefin">
+				<span class="first">SITEMARKS</span>
+				<span class="second">SELECT SITE IS...</span>
+				<span class="third">NAME</span>
+			</div>
 		</div>
-		-->
+		<!-- 03-03.REMINEDER -->
+		<div class="theme-ground">
+			<div class="caption  color-white f-Josefin">
+				<span class="first">REMINEDER</span>
+				<span class="second">SELECT REMINEDER IS...</span>
+				<span class="third">NAME</span>
+			</div>
+		</div>
+		<!-- REEDLATER FEED SITUATION TODO COLLECTION HOTENTRY, AND MORE... -->
 	</div>
 </div>
 <footer id="bottom">
