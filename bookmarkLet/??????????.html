@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ブックマークレット</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+<a href="javascript:" id="one">send.php BL</a>
+<script type="text/javascript">
+
+//	<	%3C
+//	>	%3E
+
+//---------------------------------------------------------
+//	【BL仕様】
+//	必要：jQuery, transit.js, bounce.js(my)
+//	- これらをまとめてロードできないか？例えば1つのファイルで
+//	
+//	iframeをcreate
+//	必要：url, user_id
+//	sqlで送信
+//	完了したらiframeの中でbounce
+//	iframeを削除
+//---------------------------------------------------------
+
+function test1()//コピペ
+{
+	javascript:/*alert()*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='//p.tl/Q9Fz';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		alert();
+	});
+}
+function test2()//OK
+{
+	javascript:/*OK v1.2*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='//p.tl/Q9Fz';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		/*$('html, body').css({height: '100%'});*/
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send.php?url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: '50%', top: '50%', width: 100, height: 100, margin:0, marginTop: -150, marginLeft: -50, border: 'none', zIndex: 99999})
+		.on('load', function(){
+			
+			setTimeout(function(){
+				$that.remove();
+			}, 1000);
+		});
+	});
+	
+	
+	//2013-03-12:	jQueryが読み込めないのを改正
+	javascript:/*OK v1.3*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		/*$('html, body').css({height: '100%'});*/
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send.php?url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: '50%', top: '50%', width: 100, height: 100, margin:0, marginTop: -150, marginLeft: -50, border: 'none', zIndex: 99999})
+		.on('load', function(){
+			
+			setTimeout(function(){
+				$that.remove();
+			}, 1000);
+		});
+	});
+	
+	
+	//2013-03-12:	iframeを小さくしてもスピードに違いがなかったので、フルサイズにしてメンテ(box-shadowをつけたり)がしやすいようにする
+	javascript:/*OK v1.4*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		$('html, body').css({height: '100%'});
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send.php?url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', margin:0, border: 'none', zIndex: 99999})
+		.on('load', function(){
+			
+			setTimeout(function(){
+				$that.remove();
+			}, 1000);
+		});
+	});
+	
+	//2013-03-11:	サイトによっては消えなかったので、.click(function(){ $(this).remove() })　してあげるといいかも。
+}
+
+
+
+function test3()//なぜか動かない　奇妙なコード
+{
+	javascript:(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='//rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/package.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		$(function(){
+			alert();
+		})
+	});
+}
+
+//---------------------------------------------------------
+//	bookmarklet - send_all.php
+//---------------------------------------------------------
+function test4()
+{
+	javascript:/*OK v1.1*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='//p.tl/Q9Fz';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		/*$('html, body').css({height: '100%'});*/
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send_all.php?title='+document.title+'&url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: '50%', top: 0, width: 400, height: 400, margin:0, marginLeft: -200, border: 'none', zIndex: 99999});
+		
+	});
+	
+	
+	//2013-03-12:	jQueryが読み込めないのを改正
+	javascript:/*OK v1.2*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		/*$('html, body').css({height: '100%'});*/
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send_all.php?title='+document.title+'&url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: '50%', top: 0, width: 400, height: 400, margin:0, marginLeft: -200, border: 'none', zIndex: 99999});
+		
+	});
+	
+	
+	//2013-03-12:	iframeを小さくしてもスピードに違いがなかったので、フルサイズにしてメンテ(box-shadowをつけたり)がしやすいようにする
+	javascript:/*OK v1.3*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		$('html, body').css({height: '100%'});
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send_all.php?title='+document.title+'&url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', margin:0, border: 'none', zIndex: 99999});
+		
+	});
+	
+	
+}
+
+
+
+
+
+
+//-------------------------------------------------------
+//	slide down the panel from browser top.
+//-------------------------------------------------------
+
+
+</script>
+</body>
+</html>
