@@ -84,5 +84,32 @@ console.log(DS);
 <script src="js/lib/jquery.adjustRect.js"></script>
 <script src="js/lib/jquery.openTop.js"></script>
 <script src="js/inBox.js"></script>
+<script>
+//---------------------------------------<< initialize >>----------------------------------------
+(function($){
+	
+	//First Select Num (nth-child Type.)
+	var THEME_GROUND = 1;
+	
+	
+	//$('#bookmark .theme-ground:nth-child('+THEME_GROUND+') .caption .first').click();
+	
+	
+})(jQuery);
+//---------------------------------------<< /initialize >>----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>
