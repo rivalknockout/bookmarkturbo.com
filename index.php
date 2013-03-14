@@ -12,8 +12,20 @@
 <body class="app">
 <script>
 $('body').hide().fadeIn(1500);
+
+//仮のphpからのjson
 var DS = <?php echo json_encode($data_store);?>;
-console.log(DS);
+//初期に表示するBOOKをAjaxで取ってきましたと仮定して
+var data_books = [
+	{id: 1}, {id: 4},{id: 7},{id: 8},{},{},{},{},{},{},
+	{},{},{},{},{},{},{},{},{},{},
+	{},{},{},{},{},{},{},{},{},{}
+];
+var data_bookmarks = [
+	{id: 24}, {id: 29},{id: 31},{id: 38},{},{},{},{},{},{},
+	{},{},{},{},{},{},{},{},{},{},
+	{},{},{},{},{},{},{},{},{},{}
+];
 </script>
 <img id="appBg" src="img/app_bg.jpg">
 <div id="container">
@@ -45,11 +57,12 @@ console.log(DS);
 		<div class="theme-ground">
 			<div class="caption  color-white f-Josefin">
 				<span class="first">BOOKMARKS</span>
-				<span class="second">SELECT BOOK IS...</span>
+				<span class="second">SELECT <strong>BOOK</strong> IS...</span>
 				<span class="third">NAME</span>
 			</div>
 			<div class="base-rail">
-				<div class="books parent"></div>
+				<!-- jsで.parentがあるということは子要素もあるという前提で作ってるので空の.parentは書かない -->
+				<!-- byJs <div class="books parent"></div>-->
 				<!-- byJs <div id="hoge" class="bookmarks parent"></div>-->
 			</div>
 		</div>
@@ -60,6 +73,8 @@ console.log(DS);
 				<span class="second">SELECT SITE IS...</span>
 				<span class="third">NAME</span>
 			</div>
+			<div class="base-rail">
+			</div>
 		</div>
 		<!-- 03-03.REMINEDER -->
 		<div class="theme-ground">
@@ -67,6 +82,8 @@ console.log(DS);
 				<span class="first">REMINEDER</span>
 				<span class="second">SELECT REMINEDER IS...</span>
 				<span class="third">NAME</span>
+			</div>
+			<div class="base-rail">
 			</div>
 		</div>
 		<!-- REEDLATER FEED SITUATION TODO COLLECTION HOTENTRY, AND MORE... -->
@@ -82,7 +99,9 @@ console.log(DS);
 <script src="https://raw.github.com/rivalknockout/myjQueryPlugin/master/toast.js"></script>
 <script src="js/lib/jquery.transit.min.js"></script>
 <script src="js/lib/jquery.adjustRect.js"></script>
+<script src="js/lib/jquery.delayRotateX.js"></script>
 <script src="js/lib/jquery.openTop.js"></script>
+<script src="js/createBooks.js"></script>
 <script src="js/inBox.js"></script>
 <script>
 //---------------------------------------<< initialize >>----------------------------------------

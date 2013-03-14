@@ -47,16 +47,16 @@
 	//-----------------------------------------------------------------
 	$.fn.adjustTwoLines = function(baseLeft)
 	{
-		var BASE = baseLeft || 40;
+		var BASE = baseLeft || 0;
 		
 		var $this = $(this);
 		var w = parseInt($this.css('width'));//this width
 		var h = parseInt($this.css('height'));//this height
 		var mb = parseInt($this.css('margin-bottom'));//this margin-bottom
 		var mr = parseInt($this.css('margin-right'));//this margin-left
+		console.log(w+':'+h+':'+mb+':'+mr);
 		
 		return this.each(function(i){
-			
 			var isOdd = i%2 ? true : false;//odd:奇数
 			var t = isOdd ? h+mb : 0;
 			var j = Math.floor(i/2);

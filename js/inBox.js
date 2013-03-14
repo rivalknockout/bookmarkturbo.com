@@ -8,14 +8,19 @@
 	//x(dont need: $TG.data( 'height', parseInt($TG.css('height')) );
 	//x(dont need: $TG.css({ height: $TG.css('height') });
 	
+	
+	
+	//	ふれてない...
+	/*
 	// Layout setting...
 	$P = $('#bookmark .rail');
 	$T = $('>div', $P);
 	
-	$T.adjustWH();
-	$T.adjustM();
-	$T.adjustTwoLines();
-	
+	$T
+	.adjustWH()
+	.adjustM()
+	.adjustTwoLines();
+	*/
 	
 })(jQuery);
 //-------------------------------------------------------------------------------------
@@ -24,106 +29,85 @@
 $(window).resize(function(){
 	
 	
+	//	ふれてない...
+	/*
 	$P = $('#bookmark .rail');
 	$T = $('>div', $P);
 	
 	
-	$T.adjustWH();
-	$T.adjustM();
-	$T.adjustTwoLines();
-	
+	$T
+	.adjustWH()
+	.adjustM()
+	.adjustTwoLines();
+	*/
 	
 });
 
-// Caption...
-var SECOND_Y = 60;
-var $TG = $('#bookmark .theme-ground');
-var $CAP = $('.caption', $TG);
+// Caption... 
+var $TGs = $('#bookmark .theme-ground');
+var $CAP = $('.caption', $TGs);
 var $1st = $('.first', $CAP);
 var $2nd = $('.second', $CAP);
 var $3rd = $('.third', $CAP);
-var	SPEED	= 600;
-var	EASE	= 'easeOutExpo';
 
 
 $1st.click(function(){
-	$TG.removeClass('current');
-	$(this).parent().parent().addClass('current');
+	
+	//排他的処理
+	closeRail($TGs.filter('.current'));
+	$TGs.removeClass('current');
+	
+	
+	//該当をオープン
+	var $TG = $(this).parent().parent().addClass('current');
+	openRail($TG);
 });
 
-/*
-$1st.toggle(function(){
-	$(this).css({ visibility: 'hidden' });
-}, function(){
-	$(this).css({ visibility: 'visible' });
-});
 
-$2nd.toggle(function(){
-	$(this).animate({ left: 0 },{ queue: false, duration: SPEED, easing: EASE })
-	.fadeIn(SPEED);
-}, function(){
-	$(this).css({ left: SECOND_Y, display: 'none' });
-});
-
-$1st.click(function(){
-	
-	var $before_1st;
-	$1st.each(function(i){
-		if($(this).css('visibility') == 'hidden')
-			$before_1st = $(this);
-	});
-	console.log($before_1st);
-	$before_1st.click();
-	$('+.second', $before_1st).click();
+// Rail... (あとでrailFunctions.jsでまとめてopenRail()でコールする予定　だって部品化は大事だもの)
+function openRail($clicked_theme_ground)
+{
+	var $BR			= $('.base-rail', $clicked_theme_ground);
+	var $P_BOOKS	= $('.books.parent', $BR);
+	var SPEED		= 600;
+	var EASE		= 'easeOutExpo';
 	
 	
-	$('+.second', $(this)).click();
+	//.book-railが子要素をひとつももっていなかったら、.books.parentをつくりその中に子要素をもつ
+	var hasChild = $BR.children().length;
+	if(!hasChild)
+	{
+		$P_BOOKS = $('<div class="books parent"></div>').appendTo($BR);
+		createThumnails_inBooks($BR);
+	}
 	
 	
-});
-*/
-
-
-/*
-$('.first', $CAP).toggle(function(){
-	
-	var 
-	$this	= $(this),
-	SPEED	= 600,
-	EASE	= 'easeOutExpo';
-	
-	
-	// Other Close...
-	(function(){
+	console.log('Will Open The Clicked .base-rail');
+	//Done
+	$BR.show().animate({ height: window.innerHeight*.4 }, SPEED, EASE);
+	setTimeout(function(){
 		
-		$1st.css({ visibility: 'visible' });
+		$P_BOOKS.delay(SPEED).addClass('left0').find('>div').show().css({ rotateX: 0 });
 		
-		if(!$2nd.data('left'))
-			$2nd.data( 'left', $2nd.css('left') );
-		$2nd.css({ left: $2nd.data('left'), display: 'none' });
-		
-	})();
+	}, SPEED*.7);
+	
+}
+function closeRail($clicked_theme_ground)
+{
+	var $BR			= $('.base-rail', $clicked_theme_ground );
+	var $P_BOOKS	= $('.books.parent', $BR);
+	var SPEED		= 600;
+	var EASE		= 'easeOutExpo';
 	
 	
-	$this.css({ visibility: 'hidden' });
-	$('+.second', $this).animate({ left: 0 },{ queue: false, duration: SPEED, easing: EASE })
-	.fadeIn(SPEED);
-	
-}, function(){
+	//Erase
+	$('.bookmarks.parent', $BR).hide();
 	
 	
-	var $TG = $(this).parent().parent();
-	
-	
-	
-	
-});
-
-*/
-
-
-
-
+	//Done
+	$P_BOOKS.removeClass('left0');
+	$BR.animate({ height: 0 }, SPEED, EASE);
+}
 
 
 
@@ -147,4 +131,6 @@ $('#status .app-title').hover(function(){
 		rotateX: '0deg'
 	});
 });
+
+
 
