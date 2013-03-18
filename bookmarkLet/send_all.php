@@ -1,4 +1,24 @@
-<?php require_once('../include/preproc.php');?>
+<?php require_once('../include/preproc.php');
+
+//------------------------------------------------------
+//	ユーザIDをチェックして、ログインしてなかったら
+//	header()でログイン画面へ飛ばし、ログインしたらもどる
+//	もどってくださいフラグは、isBack=trueをURLにいれればよい。
+//	
+//	x:alert()をだす
+//	x:※あとあと、_blankでログイン画面に飛ばす。
+//------------------------------------------------------
+
+
+
+//------------------------------------------------------
+//	必要なデータ：ブックとスタックのデータ(たぶんIDと名前)
+//	このデータでカテゴリ(select)をつくる
+//------------------------------------------------------
+
+
+
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -216,12 +236,11 @@ resize: vertical !important;
 				</div>
 				<div id="tag">
 					※申し訳ありません。タグ機能は現在開発中です
-					<!--
+					<!-- hidden を type にしてつかってください -->
 					<input 
 					tabindex="10"
-					type="text"
+					type="hidden"
 					placeholder="タグを追加">
-					-->
 				</div>
 				<div id="comment">
 					<textarea
@@ -245,41 +264,28 @@ resize: vertical !important;
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
 <?php 
-/*
-//------------------------------------------Send Data To DB.
-if($_GET['url'] && USER_ID)
-{
-	query("
-	INSERT INTO
-		bookmarks
-	SET
-		user_id = ".USER_ID.",
-		url = '" .m_res($_GET['url']). "',
-		book_id = 1,
-		tags = 1,
-		comment = 'こめんと',
-		created = '" .get_sqldate(). "'
-	");
-}
-*/
+//------------------------------------------Show Error~
 
-
-//------------------------------------------Show Error.
 if(!$_GET['url'])
 	$hoge .= '<!注意>no $_GET[url] ';
 if(!USER_ID)
 	$hoge .= '<!注意>no USER_ID<あなたはログインしていない可能性があります> ';
+	
+if($hoge) echo "alert('{$hoge}');";
+
+//------------------------------------------ ~Show Error
 ?>
-<script type="text/javascript">
-//<?php if($hoge) echo "alert('{$hoge}');";?>
-
-//bounceIn(); bounceOut();
 
 
 
 
-//don't remove.
+
+//------------------------------------------------------
+//	Dont Rremove:
+//	textareaにフォーカスしたら数行高さを与えるtoggle
+//------------------------------------------------------
 $("textarea").focus(function(){
 	
 	$(this).attr({'rows': 3});
@@ -289,39 +295,59 @@ $("textarea").focus(function(){
 });
 
 
+//------------------------------------------------------
+//	自身のiframeを消す
+//	条件：呼び出し元のiframeのidが
+//	rivalknockout_send_all_frame であること!
+//------------------------------------------------------
+function closeSelf()
+{
+	var selfFrame = 
+	window.parent.document
+	.getElementById('rivalknockout_send_all_frame');
+	$(selfFrame).remove();
+}
+
+//------------------------------------------------------
+//	ボックスの外をクリックしたら（閉じる）
+//------------------------------------------------------
 
 
 
-$('body').click(function(){
 
-	pWindow = window.parent;
+//------------------------------------------------------
+//	「ブックマークする」を押したら
+//	AjaxをつかってINSERTする
+//------------------------------------------------------
+$('#closeResultControl').click(function(){
 	
-	console.log($('iframe', pWindow).remove());
-});
-
-
-/*
-//don't remove.
-//other click, remove BM function
-$('#closeBookmarklet').click(function(){
+	var $P=$('#main form #status');
+	var title		=$('#title input', $P)[0].value;
+	var category	=$('#category select', $P)[0].value;
+	var tags		=$('#tag input', $P)[0].value;
+	var comment		=$('#comment textarea', $P)[0].value;
 	
-	$('body *').remove();
-	$('html, body').css({height: 0});
+	
+	//jsonでとれるかためす
+	$.ajax({
+		data:{
+			url: location.href,
+			title: title,
+			category: category,
+			tags: tags,
+			comment: comment
+		},
+		url: '../sql/bookmark_insert.php',
+		success: function(){
+			alert('o');
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown) {
+		   alert(XMLHttpRequest);
+		   alert(textStatus);
+		   alert(errorThrown);   //parseErrorとかでたら　php側で適切な値が返ってきてないっぽい(例：json_encode()し忘れ)
+		}
+	});
 });
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

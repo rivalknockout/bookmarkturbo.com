@@ -9,10 +9,12 @@
 	
 	$.fn.delayInRotateX = function(speed){
 		
+		var WAIT = 100;//	Outと時差をつけるための待ち時間
+		
 		$(this).show().css({ rotateX: '90deg' });// ini
 		console.log($(this).parent().attr('class') +' : initialized delayInRotateX');
 		
-		speed = speed || 220;
+		speed = speed || 180;
 		var delay = speed/4;
 		
 		return this.each(function(i){
@@ -22,10 +24,11 @@
 			setTimeout(function(){
 				
 				$that.stop(true, true).delay(delay*i).transition({
+					//perspective:	'100px',	なぜか最初しか反映されない
 					rotateX:		'0deg'
 				}, speed, 'out');
 				
-			}, 200);
+			}, WAIT);
 		});
 	}
 	
@@ -34,7 +37,7 @@
 		
 		$(this).show().css({ 'rotateX': '0deg' });// ini
 		
-		speed = speed || 220;
+		speed = speed || 180;
 		var delay = speed/4;
 		
 		return this.each(function(i){

@@ -4,14 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <title>BOOKMARK TURBO</title>
-<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
 <link href="css/reset.v1.0.css" rel="stylesheet" type="text/css">
 <link href="css/inBox.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body class="app">
 <script>
-$('body').hide().fadeIn(1500);
+$('body').hide().fadeIn(1000);//1500
 
 //仮のphpからのjson
 var DS = <?php echo json_encode($data_store);?>;
@@ -47,6 +49,9 @@ var data_bookmarks = [
 		<div>
 			<p class="clock"></p>
 		</div>
+		<div class="useraccount">
+			<p class="login f-Josefin">LOG IN</p>
+		</div>
 	</header>
 	<!-- 02. -->
 	<div id="tag">
@@ -55,7 +60,7 @@ var data_bookmarks = [
 	<div id="bookmark">
 		<!-- 03-01.BOOKMARK -->
 		<div class="theme-ground">
-			<div class="caption  color-white f-Josefin">
+			<div class="caption  color-white f-Raleway t-shadow">
 				<span class="first">BOOKMARKS</span>
 				<span class="second">SELECT <strong>BOOK</strong> IS...</span>
 				<span class="third">NAME</span>
@@ -68,7 +73,7 @@ var data_bookmarks = [
 		</div>
 		<!-- 03-02.SITEMARKS -->
 		<div class="theme-ground">
-			<div class="caption  color-white f-Josefin">
+			<div class="caption  color-white f-Raleway t-shadow">
 				<span class="first">SITEMARKS</span>
 				<span class="second">SELECT SITE IS...</span>
 				<span class="third">NAME</span>
@@ -78,7 +83,7 @@ var data_bookmarks = [
 		</div>
 		<!-- 03-03.REMINEDER -->
 		<div class="theme-ground">
-			<div class="caption  color-white f-Josefin">
+			<div class="caption  color-white f-Raleway t-shadow">
 				<span class="first">REMINEDER</span>
 				<span class="second">SELECT REMINEDER IS...</span>
 				<span class="third">NAME</span>
@@ -90,6 +95,9 @@ var data_bookmarks = [
 	</div>
 </div>
 <footer id="bottom">
+<?php if($_SESSION['user_id']): ?>
+	<a href="logout.php" class="moveLogout">ログアウト</a>
+<?php endif; ?>
 </footer>
 <!-- set the DOM which will implement 'openTop' to here -->
 <div id="jqueryOpenTop" data-pushdown="true" style="padding:40px;">

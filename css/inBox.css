@@ -2,6 +2,8 @@
 #appBg{width: 100%; height: 100%;position: fixed;z-index: -99999;}
 #container{height: 100%;}
 .f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+.f-Raleway{font-family: 'Raleway', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+.t-shadow{text-shadow: 1px 1px 0px hsla(0, 0%, 0%, 0.1 ), 0 10px 10px hsla(0, 0%, 0%, .3);}
 /*----------------------------------------------------------*/
 /*	Basic structure
 /*----------------------------------------------------------*/
@@ -64,6 +66,17 @@
 #status .cntbm-total dd,
 #status .cntbm-crrnt dd{letter-spacing: 1px;}
 
+/* 2013-03-18 */
+#status .useraccount{
+	position: absolute; right: 0; top: 0;
+	width: 200px;
+	height: 100%;
+}
+#status .useraccount .login{
+	padding-left: 37px;
+	padding-top: 18px;
+}
+
 
 /*----------------------------------------------------------*/
 /*	03.
@@ -72,6 +85,8 @@
 /*	Style:		.theme-ground .caption
 /*----------------------------------------------------------*/
 #bookmark .caption{
+	height: 63px;
+	line-height: 1.2em;
 	font-size: 63px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -126,7 +141,15 @@
 
 /*----------------------------------------------------------*/
 /*	Style:		.theme-ground .base-rail
+/*
+/*	Parent　はrotateXする要素群の親
+/*	その親が複数あるのでそれをbase-railで基準を設けている
+/*	その外側にtheme-ground
+/*	#bookmark .theme-ground .base-rail .parent "rotateX(thumbnail)"
 /*----------------------------------------------------------*/
+#bookmark .base-rail{
+	top: 16px;
+}
 #bookmark .base-rail .books.parent >div{
 	position: absolute;
 	background: rgba(0,0,0,.1);
@@ -189,3 +212,17 @@ width: 100%;
 height: 1px;
 background: #4D4D4D;
 }
+
+#bottom a.moveLogout{
+	position: absolute; right: 40px; top: 20px;
+	display: block;
+	color: #ccc;
+	font-size: 12px;
+}
+
+
+
+
+
+
+

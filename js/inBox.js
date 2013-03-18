@@ -89,7 +89,7 @@ function openRail($clicked_theme_ground)
 		
 		$P_BOOKS.delay(SPEED).addClass('left0').find('>div').show().css({ rotateX: 0 });
 		
-	}, SPEED*.7);
+	}, SPEED*.2);
 	
 }
 function closeRail($clicked_theme_ground)

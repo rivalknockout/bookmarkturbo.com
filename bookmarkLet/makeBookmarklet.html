@@ -130,6 +130,22 @@ function test4()
 		
 	});
 	
+	//2013-03-14:	途中
+	javascript:/*OK v1.4*/(function(d,j,b){function r(){setTimeout(function(){(typeof jQuery=='undefined')?r():b(jQuery)},99)}if(j){b(jQuery)}else{var s=d.createElement('script');s
+	.src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';d.body.appendChild(s);r()}})(document,this.jQuery,function($){
+		$('html, body').css({height: '100%'});
+		var $that = $('%3Ciframe src=\"http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/bookmarkLet/send_all.php?title='+document.title+'&url='+location.href+'\"%3E%3C/iframe%3E')
+		.appendTo('body')
+		.css({position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', margin:0, border: 'none', zIndex: 99999});
+		
+		window.onmessage = function(e){
+			
+			if(e.data=='close iframe')
+				$that.remove();
+		};
+		
+		
+	});
 	
 }
 

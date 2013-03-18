@@ -15,12 +15,25 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 
-
-
 setcookie('email','',time()-3600);
 setcookie('password','',time()-3600);
 
 
-echo 'セッション解除';
-//header('Location: login.php');
+
 ?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ログアウトしました</title>
+</head>
+<body>
+ログアウトしました。3秒後もどります
+<script>
+setTimeout(function()
+{
+	history.back();
+}, 3000);
+</script>
+</body>
+</html>
