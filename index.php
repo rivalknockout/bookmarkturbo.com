@@ -1,4 +1,5 @@
 <?php require_once('include/preproc.php');?>
+<?php require_once('sql/select.php');?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -15,8 +16,9 @@
 <script>
 $('body').hide().fadeIn(1000);//1500
 
-//仮のphpからのjson
-var DS = <?php echo json_encode($data_store);?>;
+var commonData	= <?php echo json_encode(dump_data_forJson(0));?>;
+var userData	= null;
+
 //初期に表示するBOOKをAjaxで取ってきましたと仮定して
 var data_books = [
 	{id: 1}, {id: 4},{id: 7},{id: 8},{},{},{},{},{},{},
