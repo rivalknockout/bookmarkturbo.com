@@ -64,6 +64,7 @@ $1st.click(function(){
 });
 
 
+<<<<<<< HEAD
 // Rail... (あとでrailFunctions.jsでまとめてopenRail()でコールする予定　だって部品化は大事だもの)
 function openRail($clicked_theme_ground)
 {
@@ -110,6 +111,8 @@ function closeRail($clicked_theme_ground)
 }
 
 
+=======
+>>>>>>> createThemeGround.jsとcreateParent.jsに分けていたバージョンを保存
 
 
 
