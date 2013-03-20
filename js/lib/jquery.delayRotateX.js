@@ -1,9 +1,10 @@
 //-------------------------------------------------------------------
-//	
 //	Need:	transit.js
+//	
 //	該当要素に
-//	transform: perspective(1000);
-//	を忘れないこと！（perspective:	'1000px'ですると１個目以外が適用されない）
+//	CSS transform: perspective(1000);
+//	を忘れないこと！
+//	Js perspective:	'1000px'ですると１回目以外がなぜか適用されない
 //-------------------------------------------------------------------
 (function($){
 	
@@ -11,8 +12,7 @@
 		
 		var WAIT = 100;//	Outと時差をつけるための待ち時間
 		
-		$(this).show().css({ rotateX: '90deg' });// ini
-		console.log($(this).parent().attr('class') +' : initialized delayInRotateX');
+		$(this).css({ rotateX: '90deg' }).show();// ini
 		
 		speed = speed || 180;
 		var delay = speed/4;

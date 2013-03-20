@@ -43,6 +43,7 @@ $(window).resize(function(){
 	
 });
 
+/*x:
 // Caption... 
 var $TGs = $('#bookmark .theme-ground');
 var $CAP = $('.caption', $TGs);
@@ -63,7 +64,7 @@ $1st.click(function(){
 	openRail($TG);
 });
 
-
+*/
 
 
 

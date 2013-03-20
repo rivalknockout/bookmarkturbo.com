@@ -61,8 +61,8 @@ echo 'no error';//Ajaxへ報告
 //	つづいて、できたてホヤホヤのユーザのdbに
 //	ブックマークやスタックなどの初期データを挿入する
 //------------------------------------------------------------
-require_once('../join/make_inidata_fn.php');	//so Need user_id
-make_inidata();
+require_once('../join/make_builtindata_fn.php');// Account Built-in
+make_builtindata($_SESSION['user_id']);
 
 
 

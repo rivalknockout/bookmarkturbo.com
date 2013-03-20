@@ -1,35 +1,41 @@
 <?php
-session_start();
-//------------------------------------------------------------
-//	セッションのuser_idを確認する
-//------------------------------------------------------------
-if(is_null($_SESSION['user_id']))
-	exit('ユーザIDがセッションにありません');
-
-$user_id = $_SESSION['user_id'];
-
-
-//------------------------------------------------------------
-//	ユーザなどからのアクセスを拒否する
-//------------------------------------------------------------
-
-
+require_once('../include/preproc.php');//Need so from POST.
 
 //------------------------------------------------------------
 //	POSTで関数が選べるようにして
 //------------------------------------------------------------
-/*
-$_POST['']
-*/
 
+if($_POST['fn']&&$_POST['user_id'])
+{
+	switch($_POST['fn'])
+	{
+		case 'stack':
+			break;
+		case 'book':
+			break;
+		case 'bookmark':
+			$isSuccess = insert_bookmark(
+				$_POST['name'], $_POST['url'], $_POST['favicon_url'], 
+				$_POST['book_id'], $_POST['tags'], $_POST['comment'], 
+				$_POST['user_id']
+			);
+			break;
+	}
+	
+	if($isSuccess)
+		echo 'no error';
+}
 
 
 //------------------------------------------------------------
 //	Functions	require_onceとかでもコールできちゃう
 //------------------------------------------------------------
-function insert_stack($name)
+
+function insert_stack($name, $user_id = null)
 {
-	global $user_id, $mysqli;
+	if(is_null($user_id))	return null;
+	
+	global $mysqli;
 	$sql = sprintf('
 		INSERT	INTO  stacks
 		SET		user_id=%d, name="%s", created="%s"
@@ -41,9 +47,11 @@ function insert_stack($name)
 	return $mysqli->insert_id;
 }
 
-function insert_book($name, $stack_id)
+function insert_book($name, $stack_id, $user_id = null)
 {
-	global $user_id, $mysqli;
+	if(is_null($user_id))	return null;
+	
+	global $mysqli;
 	$sql = sprintf('
 		INSERT	INTO  books
 		SET		user_id=%d, stack_id=%d, name="%s", created="%s"
@@ -55,9 +63,11 @@ function insert_book($name, $stack_id)
 	return $mysqli->insert_id;
 }
 
-function insert_bookmark($name, $url, $favicon_url, $book_id, $tags, $comment)
+function insert_bookmark($name, $url, $favicon_url, $book_id, $tags, $comment, $user_id = null)
 {
-	global $user_id, $mysqli;
+	if(is_null($user_id))	return null;
+	
+	global $mysqli;
 	$sql = sprintf('
 		INSERT	INTO  bookmarks
 		SET		user_id=%d, name="%s", url="%s", favicon_url="%s", book_id=%d, tags="%s", comment="%s", created="%s"

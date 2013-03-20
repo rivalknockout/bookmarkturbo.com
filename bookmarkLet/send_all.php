@@ -1,4 +1,5 @@
-<?php require_once('../include/preproc.php');
+<?php 
+require_once('../include/preproc.php');
 
 //------------------------------------------------------
 //	ユーザIDをチェックして、ログインしてなかったら
@@ -8,6 +9,7 @@
 //	x:alert()をだす
 //	x:※あとあと、_blankでログイン画面に飛ばす。
 //------------------------------------------------------
+$isLogin = $_SESSION['user_id'] ? true : false;
 
 
 
@@ -17,6 +19,13 @@
 //------------------------------------------------------
 
 
+//	セッションにdataがあるか確認しなければdbからdumpしてセッションにいれる
+if($isLogin && empty($_SESSION['appData']['accountData']))
+{
+	require_once('sql/select.php');
+	$_SESSION['appData']['accountData']	= dump_data_forJson($_SESSION['user_id']);
+}
+
 
 ?>
 <!DOCTYPE HTML>
@@ -24,6 +33,7 @@
 <head>
 <meta charset="UTF-8">
 <title>send_all - iframe</title>
+
 <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
 <link href="../css/reset.v1.0.css" rel="stylesheet" type="text/css">
 <style>
@@ -202,10 +212,6 @@ max-height: 150px;
 resize: vertical !important;
 }
 </style>
-<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="../js/lib/jquery.transit.min.js"></script>
-<script src="../js/lib/jquery.bounceAlert.js"></script>
 </head>
 <body>
 <div>
@@ -230,8 +236,13 @@ resize: vertical !important;
 					<select
 					tabindex="9"
 					placeholder="カテゴリを選択">
-						<option value="foo">ふー</option>
-						<option value="foo">ばー</option>
+					<?php foreach($_SESSION['appData']['accountData'] as $table): ?>
+						<optgroup label="<?php echo $table['name'];?>">
+						<?php foreach($table['books'] as $table): ?>
+							<option value="<?php echo $table['id'];?>"><?php echo $table['name']; ?></option>
+						<?php endforeach;?>
+						</optgroup>
+					<?php endforeach;?>
 					</select>
 				</div>
 				<div id="tag">
@@ -264,14 +275,18 @@ resize: vertical !important;
 		</form>
 	</div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="../js/lib/jquery.transit.min.js"></script>
+<script src="../js/lib/jquery.bounceAlert.js"></script>
 <script type="text/javascript">
 <?php 
 //------------------------------------------Show Error~
 
 if(!$_GET['url'])
-	$hoge .= '<!注意>no $_GET[url] ';
-if(!USER_ID)
-	$hoge .= '<!注意>no USER_ID<あなたはログインしていない可能性があります> ';
+	$hoge .= '【！】no $_GET[url] ';
+if(!$isLogin)
+	$hoge .= '【！】ログインしてください';
 	
 if($hoge) echo "alert('{$hoge}');";
 
@@ -284,14 +299,18 @@ if($hoge) echo "alert('{$hoge}');";
 
 //------------------------------------------------------
 //	Dont Rremove:
-//	textareaにフォーカスしたら数行高さを与えるtoggle
+//	textareaにフォーカスしたら数行高さを与える
+//	submitが押せるよう高さはそのまま
 //------------------------------------------------------
 $("textarea").focus(function(){
 	
-	$(this).attr({'rows': 3});
+	$(this).css({height: '3em'});
 }).blur(function(){
 	
-	$(this).attr({'rows': 1});
+	/*'そのまま'のためx
+	if($(this)[0].value == '')
+		$(this).css({height: 'auto'});
+	*/
 });
 
 
@@ -330,16 +349,21 @@ $('#closeResultControl').click(function(){
 	
 	//jsonでとれるかためす
 	$.ajax({
-		data:{
+		type: 'POST',
+		data: {
+			fn: 'bookmark',
+			user_id: <?php echo $_SESSION['user_id'];?>,
 			url: location.href,
-			title: title,
-			category: category,
+			name: title,
+			book_id: category,
 			tags: tags,
 			comment: comment
 		},
-		url: '../sql/bookmark_insert.php',
-		success: function(){
-			alert('o');
+		url: '../sql/insert.php',
+		success: function(data){
+			console.log(data);
+			if(data != 'no error')
+				alert('内部エラーがおきブックマークできませんでした本当に申し訳ありません！こんなことは想定外でした！まるで茹でたポッキーのように私の心は残念でいっぱいです... 今後にご期待ください！');
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown) {
 		   alert(XMLHttpRequest);

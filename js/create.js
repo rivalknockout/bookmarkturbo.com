@@ -1,35 +1,60 @@
 
 
-function createThemeGround(stack_name, stack_id)
+function createThemeGround(stackObject)
 {
+	//	stackObjectは.theme-groundにいれてあります
 	var $HIGHEST = $('#bookmark');
-	$HIGHEST.append( makeThemeGroundHTML(stack_name, stack_id) );
+	$( makeThemeGroundHTML(stackObject) ).appendTo( $HIGHEST )
+	.data('stackObject', stackObject)
 	
 	//	Bind Click Event...
-	$('.theme-ground .caption .first', $HIGHEST).click( openRail );
+	.find('.caption .first').click( openThemeGround );
 }
 
 
-function createParent(stack_id, stack_name, booksArray)
+function createBookParent($baseRail, bookArray)
 {
-	stack_id = stack_id || 'null';
-	
-	var $HIGHEST = $('#stack_id' +stack_id+ '.theme-ground  .base-rail');
-	$HIGHEST.append( makeParentHTML(booksArray) );
+	//	bookObjectは子要素にいれてあります
+	$( makeBookParentHTML(bookArray) ).appendTo( $baseRail )
+		.find('div').each(function(i){
+			
+			$(this).data('bookObject', bookArray[i])
+			
+		})
+		.adjustWH()
+		.adjustM()
+		.adjustTwoLines()
+		
+		//	Bind Click Event...
+		.click( showBookMark );
+}
+
+
+function createBookmarkParent($baseRail, bookmarkArray, bookId)
+{
+	//	bookmarkObjectは子要素にいれてあります
+	$( makeBookmarkParentHTML(bookmarkArray, bookId) ).appendTo( $baseRail )
+		.find('a').each(function(i){
+			
+			$(this).data('bookObject', bookmarkArray[i])
+			
+		})
+		.adjustWH()
+		.adjustM()
+		.adjustTwoLines();
 }
 
 
 //----------------------------------------------------------------------
 //	Primary functions
 //----------------------------------------------------------------------
-function makeThemeGroundHTML(stack_name, stack_id)
+
+function makeThemeGroundHTML(stackObject)
 {
-	stack_name	= stack_name || 'null';
-	stack_id	= stack_id   || 'null';
+	var stack_name	= stackObject.name	|| 'null';
 	
 	var HTML = '';
-	HTML+='<!-- 00-00.JavaScript:' +stack_name+ ' -->';
-	HTML+='<div id="stack_id' +stack_id+ '" class="theme-ground">';
+	HTML+='<div class="theme-ground">';
 	HTML+='\	<div class="caption  color-white f-Raleway t-shadow">';
 	HTML+='\	\	<span class="first">' +stack_name+ '</span>';
 	HTML+='\	\	<span class="second">SELECT <strong>' +stack_name+ '</strong> IS...</span>';
@@ -43,22 +68,38 @@ function makeThemeGroundHTML(stack_name, stack_id)
 }
 
 
-function makeParentHTML(booksArray)
+function makeBookParentHTML(bookArray)
 {
 	var HTML = '';
 	
 	
 	HTML+='<div class="books parent">';
-	
-	for( i in booksArray )
+	for( i in bookArray )
 	{
-		var book_name	= booksArray[i].name;
-		var book_id		= booksArray[i].id;
-		HTML+='<div data-bookId="' +book_id+ '"></div>';
-		HTML+='\	<p>' +book_name+ '</p>';
+		HTML+='<div>';
+		HTML+='\	<p>' +bookArray[i].name+ '</p>';
 		HTML+='</div>';
 	}
+	HTML+='</div>';
 	
+	
+	return HTML;
+}
+
+
+function makeBookmarkParentHTML(bookmarkArray, bookId)
+{
+	var HTML = '';
+	
+	
+	HTML+='<div id="bookId' +bookId+ '" class="bookmarks parent">';
+	for( i in bookmarkArray )
+	{
+		HTML+='<a href="' +bookmarkArray[i].url+ '">';//a Element
+		HTML+='\	<img src="' +thumbURI(bookmarkArray[i].url)+ '">';
+		HTML+='\	<p>' +bookmarkArray[i].name+ '</p>';
+		HTML+='</a>';
+	}
 	HTML+='</div>';
 	
 	
@@ -71,5 +112,15 @@ function makeParentHTML(booksArray)
 //----------------------------------------------------------------------
 
 
-
+function thumbURI(url)
+{
+	var unitedURI = '';
+	
+	unitedURI += 'http://s.wordpress.com/mshots/v1/';
+	unitedURI += encodeURIComponent(url);
+	unitedURI += '/?w=300';
+	//unitedURI += '%2F?w=300';	どちらでも可
+	
+	return unitedURI;
+}
 
