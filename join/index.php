@@ -4,8 +4,7 @@ require('../include/preproc.php');
 //-------------------------------------------------------
 //	sessionにuser_idがあればアプリページに飛ばす
 //-------------------------------------------------------
-if($_SESSION['user_id'])
-	header('Location: ../');
+if($_SESSION['user_id'])	header('Location: ../');
 
 
 
@@ -63,16 +62,18 @@ a.moveTwiter{
 <body class="app">
 <img id="appBg" src="../img/app_bg.jpg">
 
-<h1 class="f-Josefin color-white">BOOKMARK TURBO</h1>
+<h1 class="f-Josefin color-white"><a href="../">BOOKMARK TURBO</a></h1>
 <div id="container">
-	<div class="login">
-	  <input type="text" placeholder="Eメール" id="email" autofocus>  
-	  <input type="password" placeholder="パスワード" id="password">  
-	  <input type="password" placeholder="パスワード（確認）" id="confirm"> 
-	  <input type="submit" value="始める"> 
-	  <a href="../login.php" class="moveLogin">→アカウントをもっています</a>
-	</div>
-	<div class="shadow"></div>
+	<form>
+		<div class="login">
+		  <input type="text" placeholder="Eメール" id="email" autofocus>  
+		  <input type="password" placeholder="パスワード" id="password">  
+		  <input type="password" placeholder="パスワード（確認）" id="confirm"> 
+		  <input type="submit" value="始める"> 
+		  <a href="../login.php" class="moveLogin">→アカウントをもっています</a>
+		</div>
+		<div class="shadow"></div>
+	</form>
 </div>
 
 <a class="moveTwiter" href="https://twitter.com/rivalknockout2">なにか問題がおきましたか？（この人に相談してください！すぐに返事がきます）</a>
@@ -111,16 +112,15 @@ $('input[type="submit"]').click(function(){
 		str+='パスワードが一致しません同じパスワードをご入力ください。';
 	
 	if(str)
-	{
 		alert(str);
-		return;
+	else
+	{
+		//	No problem....
+		send(email, password);
 	}
 	
 	
-	//	No problem....
-	send(email, password);
-	
-	
+	return false;//disabled submit on Form.
 });
 
 
@@ -144,7 +144,6 @@ function send(email, password)
 				alert(data);
 			else
 			{
-				window.close();
 				history.back();
 			}
 		},

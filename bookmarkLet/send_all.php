@@ -22,7 +22,7 @@ $isLogin = $_SESSION['user_id'] ? true : false;
 //	セッションにdataがあるか確認しなければdbからdumpしてセッションにいれる
 if($isLogin && empty($_SESSION['appData']['accountData']))
 {
-	require_once('sql/select.php');
+	require_once('../sql/select.php');
 	$_SESSION['appData']['accountData']	= dump_data_forJson($_SESSION['user_id']);
 }
 
@@ -37,6 +37,13 @@ if($isLogin && empty($_SESSION['appData']['accountData']))
 <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
 <link href="../css/reset.v1.0.css" rel="stylesheet" type="text/css">
 <style>
+#background{
+	position: fixed; left: 0; top: 0; width: 100%; height: 100%;
+	background: rgba(0,0,0,.2);
+}
+#evernoteStyle{
+	position: relative;
+}
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~hideaki*/
 
 
@@ -214,10 +221,11 @@ resize: vertical !important;
 </style>
 </head>
 <body>
-<div>
+<div id="background"></div>
+<div id="evernoteStyle">
 	<div id="main">
 		<form class="clipForm" action="#">
-			<div id="status" class="depressedBox">
+			<div id="status" class="depressedBox" style="padding-bottom:0">
 				<div id="title">
 					 <input 
 					 class="row firstRow" 
@@ -253,7 +261,7 @@ resize: vertical !important;
 					type="hidden"
 					placeholder="タグを追加">
 				</div>
-				<div id="comment">
+				<div id="comment" style="padding-bottom:0;">
 					<textarea
 					name	="comment"
 					rows	="1"
@@ -279,6 +287,7 @@ resize: vertical !important;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="../js/lib/jquery.transit.min.js"></script>
 <script src="../js/lib/jquery.bounceAlert.js"></script>
+<script src="../js/ajax.js"></script>
 <script type="text/javascript">
 <?php 
 //------------------------------------------Show Error~
@@ -286,15 +295,13 @@ resize: vertical !important;
 if(!$_GET['url'])
 	$hoge .= '【！】no $_GET[url] ';
 if(!$isLogin)
-	$hoge .= '【！】ログインしてください';
+	$hoge .= '【！】ログインしてください。ログイン画面を開きます';
 	
-if($hoge) echo "alert('{$hoge}');";
+if($hoge) echo "alert('{$hoge}');window.open('../login.php');closeSelf();";
 
+//echo "alert(' {$_GET['url']} {$_SESSION['user_id']}  ')";
 //------------------------------------------ ~Show Error
 ?>
-
-
-
 
 
 //------------------------------------------------------
@@ -304,7 +311,7 @@ if($hoge) echo "alert('{$hoge}');";
 //------------------------------------------------------
 $("textarea").focus(function(){
 	
-	$(this).css({height: '3em'});
+	$(this).css({height: '5em'});
 }).blur(function(){
 	
 	/*'そのまま'のためx
@@ -321,16 +328,24 @@ $("textarea").focus(function(){
 //------------------------------------------------------
 function closeSelf()
 {
+	/* 同じドメインでないとだめなのでx:
 	var selfFrame = 
 	window.parent.document
 	.getElementById('rivalknockout_send_all_frame');
 	$(selfFrame).remove();
+	*/
+	window.parent.postMessage(
+		'closeIframe', 
+		'*'
+	);
 }
 
 //------------------------------------------------------
 //	ボックスの外をクリックしたら（閉じる）
 //------------------------------------------------------
-
+$('#background').click(function(){
+	closeSelf();
+});
 
 
 
@@ -347,30 +362,22 @@ $('#closeResultControl').click(function(){
 	var comment		=$('#comment textarea', $P)[0].value;
 	
 	
-	//jsonでとれるかためす
-	$.ajax({
-		type: 'POST',
-		data: {
-			fn: 'bookmark',
-			user_id: <?php echo $_SESSION['user_id'];?>,
-			url: location.href,
-			name: title,
-			book_id: category,
-			tags: tags,
-			comment: comment
-		},
-		url: '../sql/insert.php',
-		success: function(data){
-			console.log(data);
-			if(data != 'no error')
-				alert('内部エラーがおきブックマークできませんでした本当に申し訳ありません！こんなことは想定外でした！まるで茹でたポッキーのように私の心は残念でいっぱいです... 今後にご期待ください！');
-		},
-		error:function(XMLHttpRequest, textStatus, errorThrown) {
-		   alert(XMLHttpRequest);
-		   alert(textStatus);
-		   alert(errorThrown);   //parseErrorとかでたら　php側で適切な値が返ってきてないっぽい(例：json_encode()し忘れ)
+	insertBookmark(
+		<?php echo $_SESSION['user_id'] ? $_SESSION['user_id'] : 'null' ;?>, 
+		'<?php echo $_GET['url'];?>', 
+		title, 
+		category, 
+		tags, 
+		comment,
+		function(){
+			bounceIn(null, null, function(){
+				
+				closeSelf();
+			});
 		}
-	});
+	);
+	
+	
 });
 
 

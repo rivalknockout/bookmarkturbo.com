@@ -1,8 +1,23 @@
 
 
+ドメインをbookmarkturbo.com
+に変更した際の注意
+
+ajax.jsに使われてる絶対パス
+
+
+
+追加や削除、変更をした際はアプリページをリロードして新しくダンプ＞セッションにいれること。
+ブックマークレットがセッションをもとにデータを読み込んでいるため。
+
+
+
 ================================================================================
 	データの説明
 ================================================================================
+
+methodには、'book'か'bookmark'か'stack'のいずれかが入っている。
+これで処理をわけるなどができる。
 
 appData
 
@@ -231,6 +246,58 @@ function get_bookmarks()
 		$assoc[] = $table;
 	return $assoc;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!--============== モデル ==============-->
+		<div data-stack_id="00" class="theme-ground" style="display:none">
+			<div class="caption  color-white f-Raleway t-shadow" style="font-weight:normal">
+				<span class="first">MAJOR</span>
+				<span class="second">SELECT <strong>MAJOR</strong> IS...</span>
+				<span class="third">NAME</span>
+			</div>
+			<div class="base-rail">
+				<!-- jsで.parentがあるということは子要素もあるという前提で作ってるので空の.parentは書かない -->
+				<!-- byJs <div class="books parent"></div>-->
+				<!-- byJs <div id="hoge" class="bookmarks parent"></div>-->
+			</div>
+		</div>
+		<!--============== /モデル ==============-->
+
+
+
+
+
+
+
+
+
+var user_id = null;
+<?php if($isLogin): ?>
+user_id = <?php echo $_SESSION['user_id'];?>;
+<?php endif;?>
+
+
+
 
 
 

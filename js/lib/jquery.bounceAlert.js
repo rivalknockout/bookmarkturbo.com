@@ -3,8 +3,10 @@
  * modified:	2013-03-10	
  * writer:		Hideaki
  */
-function bounceIn(text, icon, isReverse)
+function bounceIn(text, icon, this_callback, isReverse)
 {
+	this_callback = this_callback || function(){};
+	
 	text = text || 'Starred';
 	icon = icon || '★';
 	
@@ -66,15 +68,16 @@ function bounceIn(text, icon, isReverse)
 	.transition({scale: isReverse ? 0.7 : 1.7, opacity:0}, 120, 
 	function(){
 		$(this).remove();
+		this_callback();
 	});
 	
 }
 
-function bounceOut(text, icon)
+function bounceOut(text, icon, this_callback)
 {
 	text = text || 'Unstarred';
 	icon = icon || '☆';
-	bounceIn(text, icon, true);
+	bounceIn(text, icon, this_callback, true);
 }
 
 

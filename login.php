@@ -1,11 +1,16 @@
 <?php
+//-------------------------------------------------------
+//	
+//	もしオートコンプリートが機能してなかったら
+//	Ajaxが成功した場合のみJsで.submit()してあげたらどうだろう？
+//	
+//-------------------------------------------------------
 require('include/preproc.php');
 
 //-------------------------------------------------------
 //	sessionにuser_idがあればアプリページに飛ばす
 //-------------------------------------------------------
-if($_SESSION['user_id'])
-	header('Location: ./');
+if($_SESSION['user_id'])	header('Location: ./');
 
 
 ?>
@@ -24,6 +29,7 @@ a.moveJoin{
 	font-size: 10px;
 	text-align: center;
 	top: 20px;
+	color: #da5800;
 }
 a.moveTwiter{
 	display: block;
@@ -36,16 +42,18 @@ a.moveTwiter{
 <body class="app">
 <img id="appBg" src="img/app_bg.jpg">
 
-<h1 class="f-Josefin color-white">BOOKMARK TURBO</h1>
+<h1 class="f-Josefin color-white"><a href="./">BOOKMARK TURBO</a></h1>
 <div id="container">
-	<div class="login">
-	  <input type="text" placeholder="ユーザ名（またはEメール）" id="username" autofocus>  
-	  <input type="password" placeholder="パスワード" id="password">  
-	  <!--<a href="#" class="forgot">パスワードをお忘れですか?</a>-->
-	  <input type="submit" value="Log in">
-	  <a href="join" class="moveJoin">→アカウントをもっていません</a>
-	</div>
-	<div class="shadow"></div>
+	<form>
+		<div class="login">
+		  <input type="text" placeholder="ユーザ名（またはEメール）" id="username" value="<?php echo $_COOKIE['email']?>" autofocus>  
+		  <input type="password" placeholder="パスワード" id="password">  
+		  <!--<a href="#" class="forgot">パスワードをお忘れですか?</a>-->
+		  <input type="submit" value="Log in">
+		  <a href="join" class="moveJoin">→アカウントをもっていません</a>
+		</div>
+		<div class="shadow"></div>
+	</form>
 </div>
 
 <a class="moveTwiter" href="https://twitter.com/rivalknockout2">なにか問題がおきましたか？（この人に相談してください！すぐに返事がきます）</a>
@@ -75,17 +83,16 @@ $('input[type="submit"]').click(function(){
 		str+='パスワードが入力されていません。';
 	
 	if(str)
-	{
 		alert(str);
-		return;
+	else
+	{
+		//	No problem...
+		var username_or_email = username;
+		send(username_or_email, password);
 	}
 	
 	
-	//	No problem...
-	var username_or_email = username;
-	send(username_or_email, password);
-	
-	
+	return false;//disbled submit on form
 });
 
 
@@ -106,8 +113,7 @@ function send(username_or_email, password)
 				alert(data);
 			else
 			{
-				window.close();
-				history.back();
+				history.back()
 			}
 		},
 		error:function(jqXHR, textStatus, errorThrown){

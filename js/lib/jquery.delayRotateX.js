@@ -8,14 +8,17 @@
 //-------------------------------------------------------------------
 (function($){
 	
+	var SPEED = 180, DELAY_RATIO = .35;
+	
+	
 	$.fn.delayInRotateX = function(speed){
 		
-		var WAIT = 100;//	Outと時差をつけるための待ち時間
+		var WAIT = 200;//	Outと時差をつけるための待ち時間
 		
 		$(this).css({ rotateX: '90deg' }).show();// ini
 		
-		speed = speed || 180;
-		var delay = speed/4;
+		SPEED = speed || SPEED;
+		var delay = SPEED*DELAY_RATIO;
 		
 		return this.each(function(i){
 			
@@ -26,7 +29,7 @@
 				$that.stop(true, true).delay(delay*i).transition({
 					//perspective:	'100px',	なぜか最初しか反映されない
 					rotateX:		'0deg'
-				}, speed, 'out');
+				}, SPEED, 'out');
 				
 			}, WAIT);
 		});
@@ -37,14 +40,14 @@
 		
 		$(this).show().css({ 'rotateX': '0deg' });// ini
 		
-		speed = speed || 180;
-		var delay = speed/4;
+		SPEED = speed || SPEED;
+		var delay = SPEED*DELAY_RATIO;
 		
 		return this.each(function(i){
 			
 			$(this).stop(true, true).delay(delay*i).transition({
 				rotateX:		'-90deg'
-			}, speed, 'in', function(){
+			}, SPEED, 'in', function(){
 				
 				$(this).hide();
 			});

@@ -1,109 +1,256 @@
 
-
-function createThemeGround(stackObject)
+//	stackObjectは.theme-groundにいれてあります
+function createThemeGround(stackObject, className, isFirstopen)
 {
-	//	stackObjectは.theme-groundにいれてあります
 	var $HIGHEST = $('#bookmark');
-	$( makeThemeGroundHTML(stackObject) ).appendTo( $HIGHEST )
-	.data('stackObject', stackObject)
 	
-	//	Bind Click Event...
-	.find('.caption .first').click( openThemeGround );
+	var $themeGround = makeThemeGroundElement(stackObject, $HIGHEST, className);
+	
+	var $caption = makeCaptionElement(stackObject, $themeGround, isFirstopen);
+	
+	var $baseRail = makeBaseRailElement(stackObject, $themeGround);
+	
+	return 1;
 }
 
-
+//	bookObjectは子要素にいれてあります
 function createBookParent($baseRail, bookArray)
 {
-	//	bookObjectは子要素にいれてあります
-	$( makeBookParentHTML(bookArray) ).appendTo( $baseRail )
-		.find('div').each(function(i){
-			
-			$(this).data('bookObject', bookArray[i])
-			
-		})
-		.adjustWH()
-		.adjustM()
-		.adjustTwoLines()
-		
-		//	Bind Click Event...
-		.click( showBookMark );
+	var $bookParent = makeParentElement($baseRail, 'books');
+	
+	var $children = makeBookChildrenElement(bookArray, $bookParent);
+	
+	return 1;
+}
+
+//	bookmarkObjectは子要素にいれてあります
+function createBookmarkParent($baseRail, bookmarkArray, bookId)
+{
+	var $bookmarkParent = makeParentElement($baseRail, 'bookId' +bookId+ ' bookmarks');
+	
+	var $children = makeBookmarkChildrenElement(bookmarkArray, $bookmarkParent);
+	
+	
+	//	Extend...
+	//	アプリページからbookmarkをinsertするときに必要(create.js)
+	$bookmarkParent.data('book_id', bookId);
+	
+	return 1;
 }
 
 
-function createBookmarkParent($baseRail, bookmarkArray, bookId)
+//----------------------------------------------------------------------
+//	Create Theme Ground
+//----------------------------------------------------------------------
+function makeThemeGroundElement(stackObject, $HIGHEST, className)
 {
-	//	bookmarkObjectは子要素にいれてあります
-	$( makeBookmarkParentHTML(bookmarkArray, bookId) ).appendTo( $baseRail )
-		.find('a').each(function(i){
+	var $themeGround = $('<div class="theme-ground"></div>')
+		.appendTo($HIGHEST)
+		.addClass( className );
+	
+	if( stackObject=='add' )
+	{
+		$('<img class="icon-addstack" src="img/icon_usefulA/014.png" title="stackを追加する">')
+			.appendTo($themeGround);
 			
-			$(this).data('bookObject', bookmarkArray[i])
-			
-		})
+		$themeGround
+			.addClass('add')
+			.click( add );
+	}
+	else
+		$themeGround.data('stackObject', stackObject);
+	
+	
+	return $themeGround;
+}
+
+/* Caption... */
+function makeCaptionElement(stackObject, $themeGround, isFirstopen)
+{
+	if( stackObject=='add' ) return null;
+	
+	var stack_name	= stackObject.name	|| 'null';
+	
+	
+	var $caption = $('<div class="caption  color-white f-Raleway t-shadow"></div>')
+		.appendTo($themeGround)
+	
+	var $first = $('<span class="first">' +stack_name+ '</span>')
+		.appendTo($caption)
+		.click( openThemeGround );
+		
+		var $iconEdit = $('<img class="icon-edit" src="img/icon_white/Pen.png">')
+			.appendTo($first)
+			.click( changeName );
+		
+	var $second = $('<span class="second">SELECT <strong>' +stack_name+ '</strong> IS...</span>')
+		.appendTo($caption)
+		.click( closeThemeGround );
+		
+	var $third = $('<span class="third">NO NAME</span>')
+		.appendTo($caption)
+		.click( backToBook );
+	
+	
+	if(isFirstopen)
+		setTimeout(function(){
+			$first.click();
+		}, 900);
+	
+	
+	return $caption;
+}
+
+/* Base Rail... */
+function makeBaseRailElement(stackObject, $themeGround)
+{
+	return $('<div class="base-rail"></div>').appendTo($themeGround);
+}
+
+
+//----------------------------------------------------------------------
+//	Create Book Parent, Bookmark Parent
+//----------------------------------------------------------------------
+function makeParentElement($baseRail, className)
+{
+	var $parent = $('<div class="' +className+ ' parent">').appendTo($baseRail);
+	
+	return $parent;
+}
+
+/* Children... */
+function makeBookChildrenElement(bookArray, $parent)
+{
+	for( i in bookArray )
+	{
+		var $child = makeBookChildElement(bookArray[i], $parent)
+			.click( showBookMark );
+		var $edit = makeEditElement(bookArray[i], $child)
+			.click(function(){ return false });
+	}
+	
+	var $child = makeBookChildElement('add', $parent)
+		.click(function(){ return false });
+	
+	//	Extend...
+	var $children = $parent.find('>div')
 		.adjustWH()
 		.adjustM()
 		.adjustTwoLines();
+		
+		
+	return $children;
 }
-
-
-//----------------------------------------------------------------------
-//	Primary functions
-//----------------------------------------------------------------------
-
-function makeThemeGroundHTML(stackObject)
+function makeBookmarkChildrenElement(bookmarkArray, $parent)
 {
-	var stack_name	= stackObject.name	|| 'null';
-	
-	var HTML = '';
-	HTML+='<div class="theme-ground">';
-	HTML+='\	<div class="caption  color-white f-Raleway t-shadow">';
-	HTML+='\	\	<span class="first">' +stack_name+ '</span>';
-	HTML+='\	\	<span class="second">SELECT <strong>' +stack_name+ '</strong> IS...</span>';
-	HTML+='\	\	<span class="third">NAME</span>';
-	HTML+='\	</div>';
-	HTML+='\	<div class="base-rail">';
-	HTML+='\	</div>';
-	HTML+='</div>';
-	
-	return HTML;
-}
-
-
-function makeBookParentHTML(bookArray)
-{
-	var HTML = '';
-	
-	
-	HTML+='<div class="books parent">';
-	for( i in bookArray )
-	{
-		HTML+='<div>';
-		HTML+='\	<p>' +bookArray[i].name+ '</p>';
-		HTML+='</div>';
-	}
-	HTML+='</div>';
-	
-	
-	return HTML;
-}
-
-
-function makeBookmarkParentHTML(bookmarkArray, bookId)
-{
-	var HTML = '';
-	
-	
-	HTML+='<div id="bookId' +bookId+ '" class="bookmarks parent">';
 	for( i in bookmarkArray )
 	{
-		HTML+='<a href="' +bookmarkArray[i].url+ '">';//a Element
-		HTML+='\	<img src="' +thumbURI(bookmarkArray[i].url)+ '">';
-		HTML+='\	<p>' +bookmarkArray[i].name+ '</p>';
-		HTML+='</a>';
+		var $child = makeBookmarkChildElement(bookmarkArray[i], $parent);
+		var $edit = makeEditElement(bookmarkArray[i], $child)
+			.click(function(){ return false });
 	}
-	HTML+='</div>';
+	
+	var $child = makeBookmarkChildElement('add', $parent)
+		.click(function(){ return false });
+	
+	//	Extend...
+	var $children = $parent.find('>a')
+		.adjustWH()
+		.adjustM()
+		.adjustTwoLines();
+		
+		
+	return $children;
+}
+
+/* Child... */
+function makeBookChildElement(object, $parent)
+{
+	var $child = $('<div></div>').appendTo($parent);
+	if( object=='add' )
+	{
+		$child.addClass('add');
+		
+		$('<img class="icon-addbook" src="img/icon_file_and_folder/083.png">')
+			.appendTo($child)
+			.click( add );
+	}
+	else
+	{
+		$('<img class="icon-book" src="img/icon_file_and_folder/081.png">').appendTo($child);
+		$('<p class="name">' +object.name+ '</p>').appendTo($child);
+		
+		$child.data('bookObject', object);
+	}
 	
 	
-	return HTML;
+	return $child;
+}
+function makeBookmarkChildElement(object, $parent)
+{
+	var $child = $('<a href="' +object.url+ '"></a>').appendTo($parent);
+	if( object=='add' )
+	{
+		$child.addClass('add');
+		
+		$('<img class="icon-addbookmark" src="img/icon_usefulA/014.png">')
+			.appendTo($child)
+			.click( add );
+	}
+	else
+	{
+		$('<img class="thumbnail" src="' +thumbURI(object.url)+ '">').appendTo($child);
+		$('<img class="gloss" src="img/gloss-thumb.png">').appendTo($child);
+		$('<p class="name">' +object.name+ '</p>').appendTo($child);
+		
+		$child.data('bookmarkObject', object).loadingCSS('70%');
+	}
+	
+	
+	return $child;
+}
+
+/* Edit... */
+function makeEditElement(object, $child)
+{
+	var $edit = $('<div class="edit"></div>').appendTo($child);
+	
+	
+	//	Icon...
+	var $iconEdit = $('<img class="icon-edit" src="img/icon_white/Pen.png">')//21x21//Notepad:16x20
+		.appendTo($edit)
+		.click( openEdit_child );
+	
+	var $iconClose = $('<img class="icon-close" src="img/icon_white/017.png">')//32x32
+		.appendTo($edit)
+		.click( closeEdit_child );
+	
+	var $iconDelete = $('<img class="icon-delete" src="img/icon_white/Delete.png">').appendTo($edit);//18x22
+	
+	
+	//	Form...
+	var $select = $('<select></select>').appendTo($edit);
+	$('<option value="" selected disabled>移動先</option>').appendTo($select);
+	
+	var $name = $('<p class="name">' +object.name+ '</p>')
+		.appendTo($edit)
+		.click( changeName );
+	
+	if( object.comment!=undefined )
+	{
+		var $comment = $('<p class="comment">' +object.comment+ '</p>')
+			.appendTo($edit);
+	}
+	
+	if( object.url!=undefined )
+	{
+		var $url = $('<p class="url">' +object.url+ '</p>')
+			.appendTo($edit);
+			//.click();
+	}
+	
+	
+	return $edit;
 }
 
 
@@ -123,4 +270,11 @@ function thumbURI(url)
 	
 	return unitedURI;
 }
+
+
+
+
+
+
+
 

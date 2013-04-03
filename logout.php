@@ -5,6 +5,7 @@ session_start();
 
 //参考：http://jp2.php.net/manual/ja/function.session-destroy.php
 $_SESSION = array();
+
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -13,10 +14,6 @@ if (ini_get("session.use_cookies")) {
     );
 }
 session_destroy();
-
-
-setcookie('email','',time()-3600);
-setcookie('password','',time()-3600);
 
 
 
@@ -28,12 +25,12 @@ setcookie('password','',time()-3600);
 <title>ログアウトしました</title>
 </head>
 <body>
-ログアウトしました。3秒後もどります
+ログアウトしました。2秒後もどります
 <script>
 setTimeout(function()
 {
 	history.back();
-}, 3000);
+}, 1000);
 </script>
 </body>
 </html>

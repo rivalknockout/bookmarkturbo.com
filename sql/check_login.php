@@ -59,12 +59,12 @@ if( $table['password']!=$_POST['password'] )
 
 
 //------------------------------------------------------------
-//	セッションに代入
+//	合格。セッションに代入
 //------------------------------------------------------------
 //x: session_start();	preproc.phpでやってたｗ
-$_SESSION['user_id'] = $table['id'];
-$_SESSION['user_name'] = $table['name'];
-$_SESSION['user_email'] = $table['email'];	//これじゃユーザのemail変更に対応できないかも..? その都度SQLで取って来るべき？
+$_SESSION['user_id']	= $table['id'];
+$_SESSION['user_name']	= $table['name'];
+$_SESSION['user_email']	= $table['email'];	//これじゃユーザのemail変更に対応できないかも..? その都度SQLで取って来るべき？
 
 echo 'no error';
 

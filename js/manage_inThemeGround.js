@@ -23,8 +23,7 @@ function openThemeGround()
 	
 	
 	//	排他的処理
-	$('#bookmark .theme-ground.current').removeClass('current')
-		.find('.base-rail').closeRail(SPEED, EASE);
+	closeThemeGround();
 	
 	
 	//	Done...
@@ -33,20 +32,31 @@ function openThemeGround()
 	
 	
 }
+function closeThemeGround()
+{
+	var SPEED		= 600;
+	var EASE		= 'easeOutExpo';
+	
+	$('#bookmark .theme-ground.current').removeClass('current').removeClass('showingBookmark')
+		.find('.base-rail').closeRail(SPEED, EASE);
+}
+
 
 
 function showBookMark()
 {
-	var $thisBookmark	= $(this);
-	var bookObject		= $thisBookmark.data('bookObject');
+	var $thisBook		= $(this);
+	var bookObject		= $thisBook.data('bookObject');
+	if(bookObject === undefined)
+		return;
 	
-	var $bookParent		= $thisBookmark.parent();
+	var $bookParent		= $thisBook.parent();
 	var $baseRail		= $bookParent.parent();
-	//x:var $themeGround	= $baseRail.parent();
+	var $themeGround	= $baseRail.parent();
 	
 	
 	//	Exist Bookmarks...?
-	if( $('#bookId'+bookObject.id+'.bookmarks', $baseRail).length == 0 )
+	if( $('.bookmarks', $baseRail).hasClass('bookId'+bookObject.id)==false )
 	{
 		console.log(' Will Create BookMark Parent... ');
 		
@@ -54,13 +64,66 @@ function showBookMark()
 	}
 	
 	
+	$themeGround.addClass('showingBookmark');
+	$themeGround
+		.find('.caption .third').text(bookObject.name);
+	
+	
 	//	bookの子要素を反転
-	$bookParent.find('>div').delayOutRotateX();
+	$bookParent
+		.find('>div').delayOutRotateX();
 	
 	//	Done...
-	$('#bookId'+bookObject.id+'.bookmarks', $baseRail).show().find('>a').delayInRotateX();
+	$('.bookId'+bookObject.id+'.bookmarks', $baseRail).show().addClass('current')
+		.find('>a').delayInRotateX();
 	
 	
+}
+
+
+function backToBook()
+{
+	var $thisThird		= $(this);
+	var $themeGround	= $thisThird.parent().parent();
+	var $baseRail		= $themeGround.find('.base-rail');
+	
+	
+	$themeGround.removeClass('showingBookmark');
+	
+	
+	//	Bookmarkを反転して...
+	$('.bookmarks.current').removeClass('current')
+		.find('>a').delayOutRotateX();
+	
+	//	Bookを表示する
+	$baseRail
+		.find('.books.parent >div').delayInRotateX();
+	
+	
+}
+
+
+//	icon < edit < child
+function openEdit_child()
+{
+	var $iconEdit = $(this);
+	
+	$iconEdit.parent().parent().addClass('editing');
+	$iconEdit.parent().find('.icon-edit').hide();
+	setTimeout(function()
+	{
+		$iconEdit.parent().find('*:not(.icon-edit)').stop(true, true).fadeIn(600);
+	}, 300);
+	return false;
+}
+function closeEdit_child()
+{
+	var $iconClose = $(this);
+	
+	$iconClose.parent().parent().removeClass('editing');
+	$iconClose.parent().find('*').hide();
+	$iconClose.parent().find('.icon-edit').stop(true, true).fadeIn(600);
+	return false;
 }
 
 

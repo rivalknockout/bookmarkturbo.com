@@ -1,7 +1,7 @@
 @charset "UTF-8";
-*{word-wrap: break-word; margin: 0; padding: 0;}
+*{margin: 0; padding: 0;}
 html, body{height: 100%;}
-.app *{position: relative;}
+.app *{position: relative; z-index: 0;}
 body{color: #4f4f4f; font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;}
 img{display: block;}
 ul,li{list-style: none;}
@@ -126,3 +126,237 @@ input,textarea{
 	-o-box-flex: 1; 
 	box-flex: 1;
 }
+
+
+/*------------------------------------------------------------*/
+/*	Magic Loading
+/*------------------------------------------------------------*/
+#floatingBarsG{
+position:relative;
+width:20px;
+height:25px}
+
+.blockG{
+position:absolute;
+background-color:rgba(0,0,0,0);
+width:3px;
+height:8px;
+-moz-border-radius:3px 3px 0 0;
+-moz-transform:scale(0.4);
+-moz-animation-name:fadeG;
+-moz-animation-duration:0.32s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-webkit-border-radius:3px 3px 0 0;
+-webkit-transform:scale(0.4);
+-webkit-animation-name:fadeG;
+-webkit-animation-duration:0.32s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-ms-border-radius:3px 3px 0 0;
+-ms-transform:scale(0.4);
+-ms-animation-name:fadeG;
+-ms-animation-duration:0.32s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-direction:linear;
+-o-border-radius:3px 3px 0 0;
+-o-transform:scale(0.4);
+-o-animation-name:fadeG;
+-o-animation-duration:0.32s;
+-o-animation-iteration-count:infinite;
+-o-animation-direction:linear;
+border-radius:3px 3px 0 0;
+transform:scale(0.4);
+animation-name:fadeG;
+animation-duration:0.32s;
+animation-iteration-count:infinite;
+animation-direction:linear;
+}
+
+#rotateG_01{
+left:0;
+top:9px;
+-moz-animation-delay:0.12000000000000002s;
+-moz-transform:rotate(-90deg);
+-webkit-animation-delay:0.12000000000000002s;
+-webkit-transform:rotate(-90deg);
+-ms-animation-delay:0.12000000000000002s;
+-ms-transform:rotate(-90deg);
+-o-animation-delay:0.12000000000000002s;
+-o-transform:rotate(-90deg);
+animation-delay:0.12000000000000002s;
+transform:rotate(-90deg);
+}
+
+#rotateG_02{
+left:3px;
+top:3px;
+-moz-animation-delay:0.16s;
+-moz-transform:rotate(-45deg);
+-webkit-animation-delay:0.16s;
+-webkit-transform:rotate(-45deg);
+-ms-animation-delay:0.16s;
+-ms-transform:rotate(-45deg);
+-o-animation-delay:0.16s;
+-o-transform:rotate(-45deg);
+animation-delay:0.16s;
+transform:rotate(-45deg);
+}
+
+#rotateG_03{
+left:8px;
+top:1px;
+-moz-animation-delay:0.2s;
+-moz-transform:rotate(0deg);
+-webkit-animation-delay:0.2s;
+-webkit-transform:rotate(0deg);
+-ms-animation-delay:0.2s;
+-ms-transform:rotate(0deg);
+-o-animation-delay:0.2s;
+-o-transform:rotate(0deg);
+animation-delay:0.2s;
+transform:rotate(0deg);
+}
+
+#rotateG_04{
+right:3px;
+top:3px;
+-moz-animation-delay:0.24000000000000005s;
+-moz-transform:rotate(45deg);
+-webkit-animation-delay:0.24000000000000005s;
+-webkit-transform:rotate(45deg);
+-ms-animation-delay:0.24000000000000005s;
+-ms-transform:rotate(45deg);
+-o-animation-delay:0.24000000000000005s;
+-o-transform:rotate(45deg);
+animation-delay:0.24000000000000005s;
+transform:rotate(45deg);
+}
+
+#rotateG_05{
+right:0;
+top:9px;
+-moz-animation-delay:0.28s;
+-moz-transform:rotate(90deg);
+-webkit-animation-delay:0.28s;
+-webkit-transform:rotate(90deg);
+-ms-animation-delay:0.28s;
+-ms-transform:rotate(90deg);
+-o-animation-delay:0.28s;
+-o-transform:rotate(90deg);
+animation-delay:0.28s;
+transform:rotate(90deg);
+}
+
+#rotateG_06{
+right:3px;
+bottom:2px;
+-moz-animation-delay:0.32s;
+-moz-transform:rotate(135deg);
+-webkit-animation-delay:0.32s;
+-webkit-transform:rotate(135deg);
+-ms-animation-delay:0.32s;
+-ms-transform:rotate(135deg);
+-o-animation-delay:0.32s;
+-o-transform:rotate(135deg);
+animation-delay:0.32s;
+transform:rotate(135deg);
+}
+
+#rotateG_07{
+bottom:0;
+left:8px;
+-moz-animation-delay:0.36s;
+-moz-transform:rotate(180deg);
+-webkit-animation-delay:0.36s;
+-webkit-transform:rotate(180deg);
+-ms-animation-delay:0.36s;
+-ms-transform:rotate(180deg);
+-o-animation-delay:0.36s;
+-o-transform:rotate(180deg);
+animation-delay:0.36s;
+transform:rotate(180deg);
+}
+
+#rotateG_08{
+left:3px;
+bottom:2px;
+-moz-animation-delay:0.4s;
+-moz-transform:rotate(-135deg);
+-webkit-animation-delay:0.4s;
+-webkit-transform:rotate(-135deg);
+-ms-animation-delay:0.4s;
+-ms-transform:rotate(-135deg);
+-o-animation-delay:0.4s;
+-o-transform:rotate(-135deg);
+animation-delay:0.4s;
+transform:rotate(-135deg);
+}
+
+@-moz-keyframes fadeG{
+0%{
+background-color:#000000}
+
+100%{
+background-color:rgba(0,0,0,0)}
+
+}
+
+@-webkit-keyframes fadeG{
+0%{
+background-color:#000000}
+
+100%{
+background-color:rgba(0,0,0,0)}
+
+}
+
+@-ms-keyframes fadeG{
+0%{
+background-color:#000000}
+
+100%{
+background-color:rgba(0,0,0,0)}
+
+}
+
+@-o-keyframes fadeG{
+0%{
+background-color:#000000}
+
+100%{
+background-color:rgba(0,0,0,0)}
+
+}
+
+@keyframes fadeG{
+0%{
+background-color:#000000}
+
+100%{
+background-color:rgba(0,0,0,0)}
+
+}
+
+/* For Example */
+/*
+<div id="floatingBarsG">
+<div class="blockG" id="rotateG_01">
+</div>
+<div class="blockG" id="rotateG_02">
+</div>
+<div class="blockG" id="rotateG_03">
+</div>
+<div class="blockG" id="rotateG_04">
+</div>
+<div class="blockG" id="rotateG_05">
+</div>
+<div class="blockG" id="rotateG_06">
+</div>
+<div class="blockG" id="rotateG_07">
+</div>
+<div class="blockG" id="rotateG_08">
+</div>
+</div>
+*/
+

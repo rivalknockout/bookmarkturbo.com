@@ -1,8 +1,8 @@
 @charset "UTF-8";
 #appBg{width: 100%; height: 100%;position: fixed;z-index: -99999;}
 #container{height: 100%;}
-.f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
-.f-Raleway{font-family: 'Raleway', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+.f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+.f-Raleway{font-family: 'Raleway', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
 .t-shadow{text-shadow: 1px 1px 0px hsla(0, 0%, 0%, 0.1 ), 0 10px 10px hsla(0, 0%, 0%, .3);}
 /*----------------------------------------------------------*/
 /*	Basic structure
@@ -20,9 +20,10 @@
 	left: 0;
 	right: 0;
 	top: 135px;
-	bottom: 56px;
+	bottom: 57px;
 	padding: 0 40px;
 	overflow-y: auto;
+	overflow-x: hidden;
 }/*no width:100% to padding. so moving to horizon be careful.*/
 
 
@@ -52,6 +53,7 @@
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 }
+
 #status .app-title h1:nth-child(2){
 	-webkit-transform: rotateX(180deg);
 	-moz-transform: rotateX(180deg);
@@ -82,36 +84,43 @@
 /*	03.
 /*----------------------------------------------------------*/
 /*----------------------------------------------------------*/
-/*	Style:		.theme-ground .caption
+/*	場所:	.theme-ground .caption
 /*----------------------------------------------------------*/
-#bookmark .caption{
+#bookmark .theme-ground .caption{
 	height: 53px;
 	line-height: 1.2em;
 	font-size: 53px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 }
-#bookmark .caption span{
+#bookmark .theme-ground .caption span{
 	display: inline-block;
 	/*x: white-space: nowrap;*/
 }
-#bookmark .caption span:not(.second){
+#bookmark .theme-ground .caption span{
 	cursor: pointer;
 }
-#bookmark .caption .first{
+#bookmark .theme-ground .caption .first{
 	z-index: 1;
 }
-#bookmark .caption strong{
-	color: #666;
-	font-weight: normal;
-}
-
-
-/* Toggle Effect... Caption */
-#bookmark .theme-ground.current .caption .first{
+	#bookmark .theme-ground .caption .first .icon-edit{
+		position: absolute; right: -30px; top: 10px; opacity: 0;
+		-webkit-transition:
+		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	#bookmark .theme-ground.COMMON .caption .first .icon-edit,
+	#bookmark .theme-ground.PUBLIC .caption .first .icon-edit{
+		display: none;
+	}
+	
+#bookmark .theme-ground .caption .third{
 	visibility: hidden;
+	min-width: 44%;
 }
-#bookmark .caption span:not(.first){
+#bookmark .theme-ground .caption .second,
+#bookmark .theme-ground .caption .third{
 	position: absolute; top: 0; left: 60px;
 	opacity: 0;
 	-webkit-transition:
@@ -120,10 +129,58 @@
 	-moz-transition:
 	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
 	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-}#bookmark .theme-ground.current .caption .second{
+}
+#bookmark .theme-ground .caption strong{
+	color: #666;
+	font-weight: normal;
+}
+#bookmark .theme-ground.showingBookmark .caption .second{
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition:
+	 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
+	-moz-transition:
+	 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* Last Child: add */
+#bookmark .theme-ground:last-child{
+	margin-top: 10px;
+	height: 50px;
+	cursor: pointer;
+}
+#bookmark .theme-ground:last-child img.icon-addstack{
+	left: -10px; opacity: 0; padding-right: 200px;
+	-webkit-transition:
+	 left 900ms cubic-bezier(0.19, 1, 0.22, 1),
+	 opacity 900ms cubic-bezier(0.19, 1, 0.22, 1);
+	-moz-transition:
+	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+#bookmark .theme-ground:last-child:hover img.icon-addstack{
+	left: 2px; opacity: .4;
+}
+
+
+/*----------------------------------------------------------*/
+/*	場所:	.theme-ground .caption		★Toggle Effect...
+/*----------------------------------------------------------*/
+/* Current: left0 */
+#bookmark .theme-ground.current .caption .first{
+	visibility: hidden;
+}
+#bookmark .theme-ground.current .caption .second{
 	left: 0;
 	opacity: 1;
 }
+/* Showing Bookmark */
+#bookmark .theme-ground.showingBookmark .caption .third{
+	visibility: visible;
+	left: 0;
+	opacity: 1;
+}
+
+
 /*x: Toggle Effect... Base-Rail 
 #bookmark .theme-ground .base-rail{
 	-webkit-transition:
@@ -137,10 +194,30 @@
 */
 
 
+/*----------------------------------------------------------*/
+/*	場所:	.theme-ground .caption		★Hover Effect...
+/*----------------------------------------------------------*/
+/* Back To 'Book' */
+#bookmark .theme-ground.showingBookmark .caption:hover .third{
+	left: 20px;
+	opacity: .1;
+}
+#bookmark .theme-ground.showingBookmark .caption:hover .second{
+	visibility: visible;
+	opacity: .5;
+}
+/* Show Edit-icon */
+#bookmark .theme-ground .caption:hover .first .icon-edit{
+	opacity: 1;
+}
+
 
 
 /*----------------------------------------------------------*/
-/*	Style:		.theme-ground .base-rail
+/*	場所:	.theme-ground .base-rail以下
+/*----------------------------------------------------------*/
+/*----------------------------------------------------------*/
+/*	場所:	.theme-ground .base-rail
 /*
 /*	Parent　はrotateXする要素群の親
 /*	その親が複数あるのでそれをbase-railで基準を設けている
@@ -149,23 +226,61 @@
 /*----------------------------------------------------------*/
 #bookmark .base-rail{
 	top: 16px;
+	/* parentがleft0へアニメーション中に端が見きれるのを防ぐおまじない */
+	margin-left: -40px;
+	padding-left: 40px;
+	margin-right: -40px;
+	padding-right: 40px;
+	/* ここまで */
+	overflow-x: auto;
 }
+#bookmark .base-rail .parent >*{
+	box-shadow: 0 8px 20px rgba(0,0,0,.5);
+}
+#bookmark .base-rail .parent >* img{
+	position: absolute; display: block;
+}
+#bookmark .base-rail .parent >* >p.name{
+	position: absolute; left: 0; right: 0; top: 50%;
+	height: 1em; margin-top: -.5em;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 1px 1px rgba(0,0,0,.6), 0 4px 4px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1);
+}
+/* Books */
 #bookmark .base-rail .books.parent >div{
 	position: absolute;
 	background: rgba(0,0,0,.1);
+	/* なぜ効かない？:
 	-webkit-transform: perspective(100);
-	-moz-transform: perspective(1000);
+	-moz-transform: perspective(1000);*/
+	cursor: pointer;
 }
+#bookmark .base-rail .books.parent >div img.icon-book{
+	width: 35px; height: 35px;
+	left: 50%; top: 50%;
+	margin-top: -30px; margin-left: -17px;
+	opacity: .6;
+}
+#bookmark .base-rail .books.parent >div >p.name{
+	margin-top: 4px;
+	text-shadow: 1px 1px black, 0 5px 3px rgba(0,0,0,1);
+	font-size: 12px;
+}
+/* Bookmarks */
 #bookmark .base-rail .bookmarks.parent >a{
 	position: absolute;
-	background: rgba(0,255,0,.1);
+	background: rgba(0,0,0,.2);
+	/* なぜ効かない？:
 	-webkit-transform: perspective(100);
-	-moz-transform: perspective(1000);
+	-moz-transform: perspective(1000);*/
+	cursor: pointer;
 	overflow: hidden;
 }
-#bookmark .base-rail .bookmarks.parent >a img{
-	display: block;
-	position: absolute; left: 0; top: 0;
+#bookmark .base-rail .bookmarks.parent >a img.thumbnail,
+#bookmark .base-rail .bookmarks.parent >a img.gloss{
+	left: 0; top: 0;
 	width: 100%;
 }
 
@@ -185,9 +300,114 @@
 }
 
 
+/*濃#020911=hsl(212, 79%, 4%)　薄#121921=hsl(212, 29%, 5%)*/
+#bookmark .base-rail .books.parent >div{
+/* IE10 Consumer Preview */ 
+background-image: -ms-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+/* Mozilla Firefox */ 
+background-image: -moz-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+/* Opera */ 
+background-image: -o-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(radial, center top, 0, center top, 553, color-stop(0, #3C4E69), color-stop(1, hsl(212, 79%, 4%)));
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myChrome*/
+/* W3C Markup, IE10 Release Preview */ 
+background-image: radial-gradient(ellipse farthest-corner at center top, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myMoz*/
+}
+
+
+/* Last child (as Add Bookmark or Book) */
+#bookmark .base-rail .parent >*:last-child{
+	box-shadow: none;
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, rgba(0,0,0,.3)), color-stop(0.00, rgba(0,0,0,0))) !important;
+background: -webkit-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+background: -moz-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+background: -o-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+background: -ms-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+}
+#bookmark .base-rail .books.parent >div:last-child img.icon-addbook,
+#bookmark .base-rail .bookmarks.parent >a:last-child img.icon-addbookmark{
+	width: 35px; height: 35px;
+	left: 50%; top: 50%;
+	margin-top: -15px; margin-left: -17px;
+	opacity: .2;
+}
 
 
 
+
+/*----------------------------------------------------------*/
+/*	場所:	.theme-ground .base-rail .parent div(a) .edit
+/*----------------------------------------------------------*/
+#bookmark .base-rail .parent >* .edit{
+	position: absolute; left: 0; top: 0;
+	overflow: auto;
+	color: white;
+	cursor: default;
+}
+#bookmark .base-rail .parent >* .edit >*{
+	display: none;
+}
+#bookmark .base-rail .parent >* .edit >*:last-child{
+	margin-bottom: 20px;
+}
+
+
+#bookmark .base-rail .parent >* .edit >img{
+	width: 21px; height: 21px;
+	cursor: pointer;
+}
+#bookmark .base-rail .parent >* .edit >.icon-edit{
+	display: block;
+	left: 6px; top: 6px;
+}
+#bookmark .base-rail .parent >* .edit >.icon-close{
+	right: 6px; top: 6px;
+}
+#bookmark .base-rail .parent >* .edit >.icon-delete{
+	right: 31px; top: 7px;
+	width: 18px; height: 18px;
+}
+#bookmark .base-rail .parent >* .edit select{
+	margin: 20px 20px 2px;
+}
+#bookmark .base-rail .parent >* .edit p{
+	margin: 1px 20px;
+	padding: 0 7px;
+	background: rgba(255,255,255,.3);
+	font-size: 12px;
+	word-wrap: break-word;
+	cursor: pointer;
+}
+
+
+/* Toggle... */
+#bookmark .base-rail .parent >* .edit
+{
+	width: 32px;  height: 32px;
+	background: rgba(0,0,0,0);
+	-webkit-transition:
+	 all 300ms linear;
+	-moz-transition:
+	 all 300ms linear;
+}
+#bookmark .base-rail .parent >*.editing .edit/* 子要素に.editingを */
+{
+	width: 100%;  height: 100%;
+	background: rgba(0,0,0,.8);
+}
+#bookmark .base-rail .parent >* .edit >img.icon-edit{
+	opacity: 0;
+	-webkit-transition:
+	 opacity 1600ms cubic-bezier(0.19, 1, 0.22, 1);
+	-moz-transition:
+	 opacity 1600ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+#bookmark .base-rail .parent >*:hover .edit >img.icon-edit{
+	opacity: .8;
+}
 
 
 
@@ -207,6 +427,7 @@ background-color: #272727;
 border-top: 1px solid black;
 color: white;
 padding: 0 10px 0 16px;
+z-index: 1;
 }#bottom::after {
 content: "";
 display: block;
@@ -224,6 +445,152 @@ background: #4D4D4D;
 	color: #ccc;
 	font-size: 12px;
 }
+
+
+
+
+/*----------------------------------------------------------*/
+/*	#config
+/*----------------------------------------------------------*/
+#config{
+	width: 100%;
+}
+
+/* User */
+#config .user{
+	width: 400px; height: 450px;
+}
+#config .user .evernoteTips{
+	line-height: 34px;
+	font-size: 16px;
+}
+#config .user .conBody{
+	background: #000; height: 370px; margin-top: 20px;
+}
+#config .user .conBody .inner{
+	position: absolute; left: 1px; right: 1px; top: 1px; bottom: 1px;
+	border: 1px solid #545454;
+	padding: 40px;
+	background: #404040;
+	color: white;
+	text-shadow: 0 2px 1px rgba(0,0,0,1);
+}
+#config .user .conBody .cover{
+	position: absolute; left: 0; top: 0;
+	width: 100%; height: 100%;
+	background: rgba(0,0,0,.8);
+	text-align: center;
+	font-size: 14px;
+	color: white;
+	text-shadow: 0 2px 1px rgba(0,0,0,1);
+}
+#config .user .conBody .cover p{
+	padding-top: 157px;
+}
+
+/* Future */
+#config .future{
+	position: absolute; left: 450px; top: 0;
+	width: 550px; height: 450px;
+}
+#config .future .conBody{
+	background: #000; height: 348px; margin-top: 21px;
+	overflow-y: auto;
+	box-shadow: 0 1px #000,  0 -1px #000;
+}
+#config .future .conBody ul{
+	padding: 0 1px;
+	color: white;
+	text-shadow: 0 2px 1px rgba(0,0,0,1);
+	font-size: 12px;
+}
+#config .future .conBody ul li{
+	padding: 4px;
+	padding-left: 40px;
+	border: 1px solid #444444;
+	background: #303030 no-repeat 10px center;
+	margin-bottom: 1px;
+}
+#config .future .conBody ul li.red{
+	background-image: url(../img/errorRedDot.png);
+}
+#config .future .conBody ul li.yellow{
+	background-image: url(../img/warningOrangeDot.png);
+}
+#config .future .conBody ul li.green{
+	background-image: url(../img/successGreenDot.png);
+}
+
+
+/*----------------------------------------------------------*/
+/*	Evernote Tips
+/*----------------------------------------------------------*/
+.evernoteTips{
+	padding: 5px;
+	background: #888; color: white;
+	border-radius: 5px;
+	box-shadow: -1px -1px #aaa, 0 8px 20px rgba(0,0,0,.6);
+	/*box-shadow: -1px -1px #aaa, 0 12px 60px rgba(0,0,0,.6);*/
+	text-shadow: 0px 1px 1px rgba(0,0,0,.6);
+	font-size: 12px;
+}
+.evernoteTips:after{
+	content: '';
+	position: absolute; left: 5px; top: 6px; right: 5px; bottom: 4px;
+	border-radius: 3px; border: 1px dashed #999;
+	/*box-shadow: 0 1px rgba(255,255,255,.1), inset 0 1px rgba(255,255,255,.1);*/
+}
+.evernoteTips .inner{
+	border-radius: 3px; border: 1px dashed #444;
+	
+	padding: 10px;
+	padding-left: 69px;
+	z-index: 1;
+}
+.evernoteTips .inner .icon{
+	position: absolute; left: 18px; top: 50%;
+	width: 36px; height: 36px;
+	margin-top: -18px;
+	opacity: .6;
+}
+.evernoteTips .inner a{
+	color: #004989;
+	color: #ffa300;
+}
+
+
+/*----------------------------------------------------------*/
+/*	WelcomeMessage
+/*----------------------------------------------------------*/
+.welcomeMessage{
+	position: fixed; left: 50%; top: 40px;
+	width: 430px;
+	box-shadow: 20px 20px 60px rgba(0,0,0,.4);
+	z-index: 99999;
+	font-size: 11px;
+	cursor: pointer;
+}
+.welcomeMessage .header{
+	padding: 20px 50px 30px;
+	background: #7D85D3;
+	color: white;
+}
+.welcomeMessage .header p.h{
+	font-size: 48px;
+}
+.welcomeMessage .header p.s{
+	margin-top: -10px;
+	font-size: 10px;
+}
+.welcomeMessage .body{
+	padding: 20px 50px 40px;
+	background: #515D73;
+	color: white;
+	color: hsl(219, 17%, 88%);
+}
+
+
+
 
 
 
