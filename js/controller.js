@@ -8,40 +8,56 @@ function changeName()
 	var changeValue = prompt('名前の変更：', object.name);
 	if( changeValue==null ) return 1;
 	
-	var updateJson = { name: changeValue };
-	var method = whoami_byEventElem(this);
+	changeHandoff(this, { 
+		name: changeValue 
+	}, object);
+	
+	return false;// bubbling stop.
+}
+function changeComment()
+{
+	var object = getObject_byEventElem(this);
+	var changeValue = prompt('コメントの変更：', object.comment);
+	if( changeValue==null ) return 1;
+	
+	changeHandoff(this, { 
+		comment: changeValue 
+	}, object);
+	
+	return false;// bubbling stop.
+}
+function changeUrl()
+{
+	var object = getObject_byEventElem(this);
+	var changeValue = prompt('URLの変更：', object.url);
+	if( changeValue==null ) return 1;
+	
+	changeHandoff(this, { 
+		url: changeValue 
+	}, object);
+	
+	return false;// bubbling stop.
+}
+
+
+//----------------------------------------------------------------------
+//	Handoff to Ajax function
+//----------------------------------------------------------------------
+function changeHandoff(that, updateJson, object)
+{
+	var method = whoami_byEventElem(that);
 	
 	update(method, user_id, object.id, updateJson, function()
 	{
 		reloadFn();
 	});
 	
-	return false;// bubbling stop.
-}
-
-//----------------------------------------------------------------------
-//	Primary Functions
-//----------------------------------------------------------------------
-function edit(target, user_id, id, updateJson, success_callback)
-{
-	/*x:
-	switch( target )
-	{
-		case 'book':
-			updateBook(user_id, id, updateJson, success_callback);
-			break;
-		case 'bookmark':
-			updateBookmark(user_id, id, updateJson, success_callback);
-			break;
-		case 'stack':
-			updateStack(user_id, id, updateJson, success_callback);
-			break;
-	}
-	*/
-	
 	return 1;
 }
 
+//----------------------------------------------------------------------
+//	Lawless Functions
+//----------------------------------------------------------------------
 
 function add(){
 	
@@ -97,7 +113,11 @@ function add(){
 		var comment = prompt('コメント：');
 		if(comment==null)return;
 		
-		var book_id = $this.parent().data('book_id');
+		var book_id = 
+		$this
+		.parent()	//a(child)
+		.parent()	//parent
+		.data('book_id');
 		
 		insertBookmark(user_id, url, name, book_id, tags, comment, reloadFn);
 	}

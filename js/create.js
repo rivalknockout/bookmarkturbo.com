@@ -32,7 +32,7 @@ function createBookmarkParent($baseRail, bookmarkArray, bookId)
 	
 	
 	//	Extend...
-	//	アプリページからbookmarkをinsertするときに必要(create.js)
+	//	アプリページからbookmarkをinsertするときに必要(controller.js)
 	$bookmarkParent.data('book_id', bookId);
 	
 	return 1;
@@ -239,14 +239,15 @@ function makeEditElement(object, $child)
 	if( object.comment!=undefined )
 	{
 		var $comment = $('<p class="comment">' +object.comment+ '</p>')
-			.appendTo($edit);
+			.appendTo($edit)
+			.click( changeComment );
 	}
 	
 	if( object.url!=undefined )
 	{
 		var $url = $('<p class="url">' +object.url+ '</p>')
-			.appendTo($edit);
-			//.click();
+			.appendTo($edit)
+			.click( changeUrl );
 	}
 	
 	

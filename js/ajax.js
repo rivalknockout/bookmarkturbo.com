@@ -44,62 +44,18 @@ function deleteStack(user_id, stack_id, this_callback)
 //--------------------------------------------------------------------------------
 //	Update
 //--------------------------------------------------------------------------------
-function updateStack(user_id, stack_id, updateJson, success_callback)
-{
-	var data = 
-	{
-		fn: 'stack',
-		user_id:		user_id,
-		stack_id:		stack_id,
-		update_assoc:	updateJson
-	};
-	commonProc_inUpdate(data, success_callback);
-}
-function updateBook(user_id, book_id, updateJson, success_callback)
-{
-	var data = 
-	{
-		fn: 'book',
-		user_id:		user_id,
-		book_id:		book_id,
-		update_assoc:	updateJson
-	};
-	commonProc_inUpdate(data, success_callback);
-}
-function updateBookmark(user_id, bookmark_id, updateJson, success_callback)
-{
-	var data = 
-	{
-		fn: 'bookmark',
-		user_id:		user_id,
-		bookmark_id:	bookmark_id,
-		update_assoc:	updateJson
-	};
-	commonProc_inUpdate(data, success_callback);
-}
-
 function update(method, user_id, objectId, updateJson, success_callback)
 {
-	var data = 
-	{
-		method:			method,
-		user_id:		user_id,
-		recode_id:		objectId,
-		update_assoc:	updateJson
-	};
-	commonProc_inUpdate(data, success_callback);
-}
-
-
-
-
-function commonProc_inUpdate(data, success_callback)
-{
-	if( !data.user_id ) return 0;
+	if( !user_id ) return 0;
 	success_callback = success_callback || function(){};
 	
 	$.ajax({
-		data: data,
+		data: {
+			method:			method,
+			user_id:		user_id,
+			recode_id:		objectId,
+			update_assoc:	updateJson
+		},
 		success: function(data){
 			console.log(data);
 			if(data != 'no error')
@@ -114,6 +70,8 @@ function commonProc_inUpdate(data, success_callback)
 		type: 'POST',
 		url: 'http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/sql/update.php'
 	});
+	
+	return 1;
 }
 
 
