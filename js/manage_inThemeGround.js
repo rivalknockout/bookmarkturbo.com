@@ -18,7 +18,13 @@ function openThemeGround()
 	{
 		console.log(' Will Create Book Parent... ');
 		
-		createBookParent($baseRail, stackObject.books);
+		var $parent = createBookParent($baseRail, stackObject.books);
+		
+		$parent
+			.find('>div')
+			.adjustWH()
+			.adjustM()
+			.adjustTwoLines();
 	}
 	
 	
@@ -43,7 +49,7 @@ function closeThemeGround()
 
 
 
-function showBookMark()
+function showBookMarks()
 {
 	var $thisBook		= $(this);
 	var bookObject		= $thisBook.data('bookObject');
@@ -60,7 +66,16 @@ function showBookMark()
 	{
 		console.log(' Will Create BookMark Parent... ');
 		
-		createBookmarkParent($baseRail, bookObject.bookmarks, bookObject.id);
+		var $parent = createBookmarkParent($baseRail, bookObject.bookmarks, bookObject.id);
+		
+		$parent
+			.find('>a')
+			.adjustWH()
+			.adjustM()
+			.adjustTwoLines()
+			
+			.filter(':not(.add)')
+			.loadingCSS('70%');
 	}
 	
 	

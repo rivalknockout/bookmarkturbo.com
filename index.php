@@ -68,14 +68,12 @@ if($isLogin)
 		//---------------------------------------------------------------------------
 		//	共通
 		//---------------------------------------------------------------------------
-		var isFirstopen = false;
-		if(!user_id)
-			isFirstopen = true;
-		
+		var className = 'COMMON ';
+		if(!user_id) className+=' ini-open';
 		
 		if(typeof commonData == 'object')
 			for(i in commonData)
-				createThemeGround(commonData[i], 'COMMON', isFirstopen);
+				createThemeGround(commonData[i], className );
 		//---------------------------------------------------------------------------
 		//	アカウント
 		//---------------------------------------------------------------------------
@@ -93,7 +91,10 @@ if($isLogin)
 			createThemeGround({name: 'WORK', books:[{name: 'inBox', bookmarks: []}]}, 'PUBLIC');
 			createThemeGround({name: 'PRIVATE', books:[{name: 'inBox', bookmarks: []}]}, 'PUBLIC');
 		}
-		createThemeGround('add');
+		//---------------------------------------------------------------------------
+		//	共通
+		//---------------------------------------------------------------------------
+		createThemeGround_toAdd();
 		});
 		</script>
 		<!-- REEDLATER FEED SITUATION TODO COLLECTION HOTENTRY, AND MORE... -->
@@ -145,10 +146,10 @@ if($isLogin)
 			<div class="conBody">
 				<ul>
 					<li class="green">ブックマークレットの提供</li>
+					<li class="green">オートコンプリート</li>
 					<li class="yellow">削除、変更機能</li>
 					<li class="yellow">ユーザ情報の編集</li>
 					<li class="yellow">横スクロールの使いづらさを解消</li>
-					<li class="yellow">Cookieの許可</li>
 					<li class="red">CSVでインポート、エクスポートできる</li>
 					<li class="red">スタック・ブック・ブックマークの並び替え</li>
 					<li class="red">フリーワード検索機能（エゴサーチ）</li>
@@ -204,6 +205,7 @@ if($isLogin)
 <script src="js/lib/jquery.delayRotateX.js"></script>
 <script src="js/lib/jquery.openTop.js"></script>
 <script src="js/lib/jquery.tinyPlugins.js"></script>
+<script src="js/lib/jquery.to.js"></script>
 <script src="js/manage_inThemeGround.js"></script>
 <script src="js/controller.js"></script>
 <script src="js/create.js"></script>
@@ -221,6 +223,13 @@ if($isLogin)
 	});
 	
 })(jQuery);
+$(function(){
+	
+});
+$(window).on('load',function(){
+	
+	$('#bookmark .theme-ground.ini-open .first').click();
+});
 //---------------------------------------<< /initialize >>----------------------------------------
 
 <?php 

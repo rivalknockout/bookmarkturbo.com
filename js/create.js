@@ -1,257 +1,164 @@
-
-//	stackObjectは.theme-groundにいれてあります
-function createThemeGround(stackObject, className, isFirstopen)
+//----------------------------------------------------------------------
+//	Theme-ground
+//----------------------------------------------------------------------
+//冗長なプログラムのために'stackObject'を与えています。
+function createThemeGround( stackObject, className )
 {
-	var $HIGHEST = $('#bookmark');
+	name = stackObject.name||'null';
+	var JSONs = 
+	[{ 
+	class:'theme-ground '+className, data:{ 'stackObject':stackObject, 'object':stackObject },
+		c:[
+		{ class:'caption  color-white f-Raleway t-shadow', 
+			c:[
+			{ t:'span', class:'first', html:name, 
+				c: { t:'img', class:'icon-edit', src:'img/icon_white/Pen.png' }
+			},
+			{ t:'span', class:'second', html:'SELECT <strong>' +name+ '</strong> IS...' },
+			{ t:'span', class:'third', html:'NO NAME' }
+			]
+		},
+		{ class:'base-rail' }
+		]
+	}];
 	
-	var $themeGround = makeThemeGroundElement(stackObject, $HIGHEST, className);
-	
-	var $caption = makeCaptionElement(stackObject, $themeGround, isFirstopen);
-	
-	var $baseRail = makeBaseRailElement(stackObject, $themeGround);
-	
-	return 1;
+	return $(JSONs).to('#bookmark');;
 }
-
-//	bookObjectは子要素にいれてあります
-function createBookParent($baseRail, bookArray)
+function createThemeGround_toAdd()	//to add...
 {
-	var $bookParent = makeParentElement($baseRail, 'books');
-	
-	var $children = makeBookChildrenElement(bookArray, $bookParent);
-	
-	return 1;
-}
-
-//	bookmarkObjectは子要素にいれてあります
-function createBookmarkParent($baseRail, bookmarkArray, bookId)
-{
-	var $bookmarkParent = makeParentElement($baseRail, 'bookId' +bookId+ ' bookmarks');
-	
-	var $children = makeBookmarkChildrenElement(bookmarkArray, $bookmarkParent);
-	
-	
-	//	Extend...
-	//	アプリページからbookmarkをinsertするときに必要(controller.js)
-	$bookmarkParent.data('book_id', bookId);
-	
-	return 1;
+	return $([{ 
+	class:'theme-ground add', 
+		c: [{ t:'img', class:'icon-addstack', src:'img/icon_usefulA/014.png', title:'stackを追加する' }]
+	}])
+	.to('#bookmark');
 }
 
 
 //----------------------------------------------------------------------
-//	Create Theme Ground
+//	Parent and Child
 //----------------------------------------------------------------------
-function makeThemeGroundElement(stackObject, $HIGHEST, className)
+//冗長なプログラムのために'bookObject'を与えています。
+function createBookParent( $baseRail, objects )
 {
-	var $themeGround = $('<div class="theme-ground"></div>')
-		.appendTo($HIGHEST)
-		.addClass( className );
+	//	Parent...
+	var JSONs = [{ class:'books parent', c:[] }];
 	
-	if( stackObject=='add' )
+	
+	//	Children...
+	if( objects==undefined ) objects=[];//例外処理
+	for(var i=0; i<objects.length; i++)
 	{
-		$('<img class="icon-addstack" src="img/icon_usefulA/014.png" title="stackを追加する">')
-			.appendTo($themeGround);
+		//	Child...
+		JSONs[0].c[JSONs[0].c.length] = { 
+		class:'child num'+i, 
+		data:{ 'bookObject':objects[i], 'object':objects[i] }, 
 			
-		$themeGround
-			.addClass('add')
-			.click( add );
+			//	Icon and Name...
+			c:[
+			{ t:'img', class:'icon-book', src:'img/icon_file_and_folder/081.png' },
+			{ t:'p', class:'name', html:objects[i].name },
+			getJSON_edit_toChildInner( objects[i] )
+			]
+		};
 	}
-	else
-		$themeGround.data('stackObject', stackObject);
 	
 	
-	return $themeGround;
+	//	Child to Add...
+	JSONs[0].c[JSONs[0].c.length] = 
+	{ 
+	class:'child add', 
+		c:[
+		{ t:'img', class:'icon-addbook', src:'img/icon_file_and_folder/083.png' }
+		]
+	};
+	
+	return $(JSONs).to( $baseRail );
 }
-
-/* Caption... */
-function makeCaptionElement(stackObject, $themeGround, isFirstopen)
+//冗長なプログラムのために'bookmarkObject'を与えています。
+function createBookmarkParent( $baseRail, objects, bookId )
 {
-	if( stackObject=='add' ) return null;
-	
-	var stack_name	= stackObject.name	|| 'null';
-	
-	
-	var $caption = $('<div class="caption  color-white f-Raleway t-shadow"></div>')
-		.appendTo($themeGround)
-	
-	var $first = $('<span class="first">' +stack_name+ '</span>')
-		.appendTo($caption)
-		.click( openThemeGround );
-		
-		var $iconEdit = $('<img class="icon-edit" src="img/icon_white/Pen.png">')
-			.appendTo($first)
-			.click( changeName );
-		
-	var $second = $('<span class="second">SELECT <strong>' +stack_name+ '</strong> IS...</span>')
-		.appendTo($caption)
-		.click( closeThemeGround );
-		
-	var $third = $('<span class="third">NO NAME</span>')
-		.appendTo($caption)
-		.click( backToBook );
+	//	Parent...
+	var JSONs = [{ class:'bookId' +bookId+ ' bookmarks parent', c:[] }];
 	
 	
-	if(isFirstopen)
-		setTimeout(function(){
-			$first.click();
-		}, 900);
+	//	Children...
+	if( objects==undefined ) objects=[];//例外処理
+	for(var i=0; i<objects.length; i++)
+	{
+		//	Child...
+		JSONs[0].c[JSONs[0].c.length] = { 
+		t:'a', href:objects[i].url, 
+		class:'child num'+i, 
+		data:{ 'bookmarkObject':objects[i], 'object':objects[i] }, 
+			
+			//	Icon and Name...
+			c:[
+			{ t:'img', class:'thumbnail', src:thumbURI(objects[i].url) },
+			{ t:'img', class:'gloss', src:'img/gloss-thumb.png' },
+			{ t:'p', class:'name', html:objects[i].name },
+			getJSON_edit_toChildInner( objects[i], 'bookmark' )
+			]
+		};
+	}
 	
 	
-	return $caption;
+	//	Child to Add...
+	JSONs[0].c[JSONs[0].c.length] = 
+	{ 
+	t:'a', class:'child add', 
+		c:[
+		{ t:'img', class:'icon-addbookmark', src:'img/icon_usefulA/014.png' }
+		]
+	};
+	
+	return $(JSONs).to( $baseRail );
 }
-
-/* Base Rail... */
-function makeBaseRailElement(stackObject, $themeGround)
-{
-	return $('<div class="base-rail"></div>').appendTo($themeGround);
-}
-
 
 //----------------------------------------------------------------------
-//	Create Book Parent, Bookmark Parent
+//	Childの下層、Edit
 //----------------------------------------------------------------------
-function makeParentElement($baseRail, className)
+function getJSON_edit_toChildInner( object, method )
 {
-	var $parent = $('<div class="' +className+ ' parent">').appendTo($baseRail);
+	var JSON = { 
+	class:'edit', 
+		c:[
+		{ t:'img', class:'icon-edit', src:'img/icon_white/Pen.png' },//21x21//Notepad:16x20
+		{ t:'img', class:'icon-close', src:'img/icon_white/017.png' },//32x32
+		{ t:'img', class:'icon-delete', src:'img/icon_white/Delete.png' },//18x22
+		getJSON_select_toMove()
+		]
+	};
+	JSON.c[JSON.c.length] = 
+	{ t:'p', class:'name', html:object.name };
 	
-	return $parent;
+	if( method=='bookmark' )
+	{
+		JSON.c[JSON.c.length] = 
+		{ t:'p', class:'comment', html:object.comment };
+		JSON.c[JSON.c.length] = 
+		{ t:'p', class:'url', html:object.url };
+	}
+	
+	return JSON;
 }
 
-/* Children... */
-function makeBookChildrenElement(bookArray, $parent)
+//----------------------------------------------------------------------
+//	Select
+//----------------------------------------------------------------------
+function getJSON_select_toMove()
 {
-	for( i in bookArray )
+	var JSON = { 
+	t:'select', 
+		//	first child
+		c:[{ t:'option', selected:'', disabled:'', value:'', html:'移動先' }] };
+	for(var i=0; i<2; i++)
 	{
-		var $child = makeBookChildElement(bookArray[i], $parent)
-			.click( showBookMark );
-		var $edit = makeEditElement(bookArray[i], $child)
-			.click(function(){ return false });
+		//	children
+		JSON.c[JSON.c.length] = 
+		{ t:'option', value:'', html:'name'+i }
 	}
 	
-	var $child = makeBookChildElement('add', $parent)
-		.click(function(){ return false });
-	
-	//	Extend...
-	var $children = $parent.find('>div')
-		.adjustWH()
-		.adjustM()
-		.adjustTwoLines();
-		
-		
-	return $children;
-}
-function makeBookmarkChildrenElement(bookmarkArray, $parent)
-{
-	for( i in bookmarkArray )
-	{
-		var $child = makeBookmarkChildElement(bookmarkArray[i], $parent);
-		var $edit = makeEditElement(bookmarkArray[i], $child)
-			.click(function(){ return false });
-	}
-	
-	var $child = makeBookmarkChildElement('add', $parent)
-		.click(function(){ return false });
-	
-	//	Extend...
-	var $children = $parent.find('>a')
-		.adjustWH()
-		.adjustM()
-		.adjustTwoLines();
-		
-		
-	return $children;
-}
-
-/* Child... */
-function makeBookChildElement(object, $parent)
-{
-	var $child = $('<div></div>').appendTo($parent);
-	if( object=='add' )
-	{
-		$child.addClass('add');
-		
-		$('<img class="icon-addbook" src="img/icon_file_and_folder/083.png">')
-			.appendTo($child)
-			.click( add );
-	}
-	else
-	{
-		$('<img class="icon-book" src="img/icon_file_and_folder/081.png">').appendTo($child);
-		$('<p class="name">' +object.name+ '</p>').appendTo($child);
-		
-		$child.data('bookObject', object);
-	}
-	
-	
-	return $child;
-}
-function makeBookmarkChildElement(object, $parent)
-{
-	var $child = $('<a href="' +object.url+ '"></a>').appendTo($parent);
-	if( object=='add' )
-	{
-		$child.addClass('add');
-		
-		$('<img class="icon-addbookmark" src="img/icon_usefulA/014.png">')
-			.appendTo($child)
-			.click( add );
-	}
-	else
-	{
-		$('<img class="thumbnail" src="' +thumbURI(object.url)+ '">').appendTo($child);
-		$('<img class="gloss" src="img/gloss-thumb.png">').appendTo($child);
-		$('<p class="name">' +object.name+ '</p>').appendTo($child);
-		
-		$child.data('bookmarkObject', object).loadingCSS('70%');
-	}
-	
-	
-	return $child;
-}
-
-/* Edit... */
-function makeEditElement(object, $child)
-{
-	var $edit = $('<div class="edit"></div>').appendTo($child);
-	
-	
-	//	Icon...
-	var $iconEdit = $('<img class="icon-edit" src="img/icon_white/Pen.png">')//21x21//Notepad:16x20
-		.appendTo($edit)
-		.click( openEdit_child );
-	
-	var $iconClose = $('<img class="icon-close" src="img/icon_white/017.png">')//32x32
-		.appendTo($edit)
-		.click( closeEdit_child );
-	
-	var $iconDelete = $('<img class="icon-delete" src="img/icon_white/Delete.png">').appendTo($edit);//18x22
-	
-	
-	//	Form...
-	var $select = $('<select></select>').appendTo($edit);
-	$('<option value="" selected disabled>移動先</option>').appendTo($select);
-	
-	var $name = $('<p class="name">' +object.name+ '</p>')
-		.appendTo($edit)
-		.click( changeName );
-	
-	if( object.comment!=undefined )
-	{
-		var $comment = $('<p class="comment">' +object.comment+ '</p>')
-			.appendTo($edit)
-			.click( changeComment );
-	}
-	
-	if( object.url!=undefined )
-	{
-		var $url = $('<p class="url">' +object.url+ '</p>')
-			.appendTo($edit)
-			.click( changeUrl );
-	}
-	
-	
-	return $edit;
+	return JSON;
 }
 
 
@@ -271,6 +178,36 @@ function thumbURI(url)
 	
 	return unitedURI;
 }
+
+
+
+
+
+
+
+
+$('#bookmark .theme-ground.add').live('click', add);
+//	Caption
+	$('#bookmark .first').live('click', openThemeGround);
+	$('#bookmark .first .icon-edit').live('click', changeName);
+	$('#bookmark .second').live('click', closeThemeGround);
+	$('#bookmark .third').live('click', backToBook);
+//	Base rail
+	//	Books parent...
+	$('#bookmark .books.parent .child:not(.add)').live('click', showBookMarks);
+	$('#bookmark .books.parent .child.add').live('click', add);
+	$('#bookmark .bookmarks.parent .child.add').live('click', add);
+	//	Edit...
+	$('#bookmark .edit').live('click', function(){ return false });
+	$('#bookmark .edit .icon-edit').live('click', openEdit_child);
+	$('#bookmark .edit .icon-close').live('click', closeEdit_child);
+	$('#bookmark .edit .name').live('click', changeName);
+	$('#bookmark .edit .comment').live('click', changeComment);
+	$('#bookmark .edit .url').live('click', changeUrl);
+	
+
+
+
 
 
 
