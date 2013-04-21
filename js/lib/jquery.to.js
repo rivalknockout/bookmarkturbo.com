@@ -1,6 +1,6 @@
 //------------------------------------------------------------------
 //	USAGE:
-//	.to(JSONs : array)
+//	$(JSONs : array).to( appendToSelector );
 //	
 //	①配列を用意し、そこにJSONをいれてください。
 //	　例：[{ t:'div', id:'id_name', class:'class_name' }]
@@ -24,15 +24,16 @@
 //	t:'div', data: { foo: 'bar' } と書くことで .data('foo')で'bar'を取り出すことができます。もちろん'bar'はJSONオブジェクトなどを与えることもできます
 //	
 //	FUTURE:
+//	ひとつしか要素をもたない場合、配列を用意せず直接JSONをもたすことができる
 //	第二引数にtrueを与えると、prependのようなふるまいになる予定です
-//	eachプロパティで複数の要素を一気に生成できるようになる予定です
+//	eachプロパティで複数の要素を一気に生成できるようになる予定です each: function(i){}
 //------------------------------------------------------------------
 (function($){
 	
 	$.fn.to = function(appendToSelector)
 	{
+		//console.log('---------------------------------------------');
 		if(!$(appendToSelector).length){ alert('DOM to append is not found!\r\nis it read already?'); return 0; }
-		
 		return done(this, appendToSelector);
 	};
 	
@@ -54,6 +55,7 @@
 			
 			$new.attr(hash);
 			
+			//console.log(JSONs[i].t+' : '+JSONs[i].c);
 			//	Recursive...
 			if(JSONs[i].c!==undefined)
 				done(JSONs[i].c, $new);

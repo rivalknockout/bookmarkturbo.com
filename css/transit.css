@@ -1,0 +1,134 @@
+/* 
+ * transitだけどアニメーションせずに変化するのも含めちゃう 
+ */
+	
+	
+/*----------------------------------------------------------*/
+/*	03.Bookmark body ( App main area )
+/*----------------------------------------------------------*/
+/*----------------------------------------------------------*/
+/*	Caption
+/*----------------------------------------------------------*/
+	
+	/*** Icon ***/
+	
+	#bookmark .theme-ground .caption .first .icon-edit,
+	#bookmark .theme-ground .caption .first .icon-delete{
+		-webkit-transition:
+		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	/* Show Edit-icon */
+	#bookmark .theme-ground .caption:hover .first .icon-edit,
+	#bookmark .theme-ground .caption:hover .first .icon-delete{
+		opacity: 1;
+	}
+	
+	
+	
+	
+	/*** Caption ***/
+	
+	#bookmark .theme-ground.current .caption .first{
+		visibility: hidden;
+	}
+	#bookmark .theme-ground .caption .second,
+	#bookmark .theme-ground .caption .third{
+		-webkit-transition:
+		 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	#bookmark .theme-ground.current .caption .second{
+		left: 0;
+		opacity: 1;
+	}
+	
+	
+	#bookmark .theme-ground.showingBookmark .caption .second{
+		-webkit-transition:
+		 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	#bookmark .theme-ground.showingBookmark .caption .third{
+		visibility: visible;
+		left: 0;
+		opacity: 1;
+	}
+	/* Back To 'Book' */
+	#bookmark .theme-ground.showingBookmark .caption:hover .second{
+		visibility: visible;
+		opacity: .5;
+	}
+	#bookmark .theme-ground.showingBookmark .caption:hover .third{
+		left: 20px;
+		opacity: .1;
+	}
+	
+	
+	
+	
+	/*** Last Child ( as Add ) ***/
+	
+	#bookmark .theme-ground:last-child img.icon-addstack{
+		-webkit-transition:
+		 left 900ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 900ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	
+	
+	
+	
+	
+/*----------------------------------------------------------*/
+/*	Base rail
+/*----------------------------------------------------------*/
+	
+	#bookmark .base-rail .books.parent{
+		left: 60px; opacity: 0;
+		-webkit-transition:
+		 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+		-moz-transition:
+		 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
+		 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	#bookmark .base-rail .books.parent.left0{
+		left: 0px; opacity: 1;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

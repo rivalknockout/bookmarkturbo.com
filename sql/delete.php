@@ -4,24 +4,16 @@ require_once('../include/preproc.php');//Need so from POST.
 //------------------------------------------------------------
 //	POSTで関数が選べるようにして
 //------------------------------------------------------------
-if($_POST['fn']&&$_POST['user_id'])
-{
-	switch($_POST['fn'])
-	{
-		case 'stack':
-			$isSuccess = delete_stack($_POST['user_id'], $_POST['stack_id']);
-			break;
-		case 'book':
-			$isSuccess = delete_book($_POST['user_id'], $_POST['book_id']);
-			break;
-		case 'bookmark':
-			$isSuccess = delete_bookmark($_POST['user_id'], $_POST['bookmark_id']);
-			break;
-	}
-	
-	if($isSuccess)
-		echo 'no error';
-}
+$isSuccess = delete(
+	$_POST['method'],
+	$_SESSION['user_id'], 
+	$_POST['recode_id']
+);
+
+if($isSuccess)
+	echo 'no error';
+else
+	echo 'error!';
 
 
 //------------------------------------------------------------
@@ -30,43 +22,24 @@ if($_POST['fn']&&$_POST['user_id'])
 //	user_idが0でもreturn 0;(=エラー扱い)にしてます
 //	（パブリックデータは削除されたくない為...）
 //------------------------------------------------------------
+function delete($method, $user_id, $recode_id)
+{
+	if(empty($user_id) || empty($recode_id) || empty($method))	return 0;
+	
+	$table_name	= m_res($method.'s');
+	$user_id	= m_res($user_id);
+	$recode_id	= m_res($recode_id);
+	
+	query("
+		DELETE 
+		FROM	{$table_name}
+		WHERE	user_id={$user_id} AND id={$recode_id}
+	");
+	
+	return 1;
+}
 
-function delete_stack($user_id, $stack_id)
-{
-	if(empty($user_id) || empty($stack_id))	return 0;
-		
-	query('
-		DELETE
-		FROM	stacks
-		WHERE	user_id=' .m_res($user_id). ' AND id=' .m_res($stack_id). '
-	');
-	
-	return 1;
-}
-function delete_book($user_id, $book_id)
-{
-	if(empty($user_id) || empty($book_id))	return 0;
-		
-	query('
-		DELETE
-		FROM	books
-		WHERE	user_id=' .m_res($user_id). ' AND id=' .m_res($book_id). '
-	');
-	
-	return 1;
-}
-function delete_bookmark($user_id, $bookmark_id)
-{
-	if(empty($user_id) || empty($bookmark_id))	return 0;
-		
-	query('
-		DELETE
-		FROM	bookmarks
-		WHERE	user_id=' .m_res($user_id). ' AND id=' .m_res($bookmark_id). '
-	');
-	
-	return 1;
-}
+
 
 
 //------------------------------------------------------------

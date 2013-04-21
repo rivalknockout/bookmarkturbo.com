@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-//	Theme-ground
+//	Theme-ground	objectは.them-groundにいれてあります
 //----------------------------------------------------------------------
 //冗長なプログラムのために'stackObject'を与えています。
 function createThemeGround( stackObject, className )
@@ -12,7 +12,10 @@ function createThemeGround( stackObject, className )
 		{ class:'caption  color-white f-Raleway t-shadow', 
 			c:[
 			{ t:'span', class:'first', html:name, 
-				c: { t:'img', class:'icon-edit', src:'img/icon_white/Pen.png' }
+				c: [
+				{ t:'img', class:'icon-edit', src:'img/icon_white/Pen.png' },
+				{ t:'img', class:'icon-delete', src:'img/icon_white/Delete.png' }
+				]
 			},
 			{ t:'span', class:'second', html:'SELECT <strong>' +name+ '</strong> IS...' },
 			{ t:'span', class:'third', html:'NO NAME' }
@@ -35,7 +38,7 @@ function createThemeGround_toAdd()	//to add...
 
 
 //----------------------------------------------------------------------
-//	Parent and Child
+//	Parent and Child	objectは子要素にいれてあります
 //----------------------------------------------------------------------
 //冗長なプログラムのために'bookObject'を与えています。
 function createBookParent( $baseRail, objects )
@@ -78,7 +81,7 @@ function createBookParent( $baseRail, objects )
 function createBookmarkParent( $baseRail, objects, bookId )
 {
 	//	Parent...
-	var JSONs = [{ class:'bookId' +bookId+ ' bookmarks parent', c:[] }];
+	var JSONs = [{ class:'bookId' +bookId+ ' bookmarks parent', data:{ 'book_id':bookId }, c:[] }];
 	
 	
 	//	Children...
@@ -182,29 +185,6 @@ function thumbURI(url)
 
 
 
-
-
-
-
-$('#bookmark .theme-ground.add').live('click', add);
-//	Caption
-	$('#bookmark .first').live('click', openThemeGround);
-	$('#bookmark .first .icon-edit').live('click', changeName);
-	$('#bookmark .second').live('click', closeThemeGround);
-	$('#bookmark .third').live('click', backToBook);
-//	Base rail
-	//	Books parent...
-	$('#bookmark .books.parent .child:not(.add)').live('click', showBookMarks);
-	$('#bookmark .books.parent .child.add').live('click', add);
-	$('#bookmark .bookmarks.parent .child.add').live('click', add);
-	//	Edit...
-	$('#bookmark .edit').live('click', function(){ return false });
-	$('#bookmark .edit .icon-edit').live('click', openEdit_child);
-	$('#bookmark .edit .icon-close').live('click', closeEdit_child);
-	$('#bookmark .edit .name').live('click', changeName);
-	$('#bookmark .edit .comment').live('click', changeComment);
-	$('#bookmark .edit .url').live('click', changeUrl);
-	
 
 
 

@@ -13,17 +13,15 @@ function ajaxError(XMLHttpRequest, textStatus, errorThrown)
 //--------------------------------------------------------------------------------
 //	Delete
 //--------------------------------------------------------------------------------
-function deleteStack(user_id, stack_id, this_callback)
+function del(method, objectId, success_callback)
 {
-	if( !user_id ) return 0;
-	this_callback = this_callback || function(){};
+	success_callback = success_callback || function(){};
 	
 	$.ajax({
 		type: 'POST',
 		data: {
-			fn: 'stack',
-			user_id:	user_id,
-			stack_id:	stack_id
+			method:		method,
+			recode_id:	objectId
 		},
 		url: 'http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/sql/delete.php',
 		success: function(data){
@@ -31,10 +29,10 @@ function deleteStack(user_id, stack_id, this_callback)
 			if(data != 'no error')
 			{
 				alert('内部エラーがおき削除できませんでした' + ImSorry);
-				return;
+				return 0;
 			}
 			
-			this_callback();
+			success_callback();
 		},
 		error: ajaxError
 	});
@@ -44,15 +42,13 @@ function deleteStack(user_id, stack_id, this_callback)
 //--------------------------------------------------------------------------------
 //	Update
 //--------------------------------------------------------------------------------
-function update(method, user_id, objectId, updateJson, success_callback)
+function update(method, objectId, updateJson, success_callback)
 {
-	if( !user_id ) return 0;
 	success_callback = success_callback || function(){};
 	
 	$.ajax({
 		data: {
 			method:			method,
-			user_id:		user_id,
 			recode_id:		objectId,
 			update_assoc:	updateJson
 		},
@@ -78,7 +74,7 @@ function update(method, user_id, objectId, updateJson, success_callback)
 //--------------------------------------------------------------------------------
 //	Insert
 //--------------------------------------------------------------------------------
-function insertStack(user_id, name, this_callback)
+function insertStack(name, this_callback)
 {
 	this_callback = this_callback || function(){};
 	
@@ -86,7 +82,6 @@ function insertStack(user_id, name, this_callback)
 		type: 'POST',
 		data: {
 			fn: 'stack',
-			user_id:	user_id,
 			name:		name
 		},
 		url: 'http://rivalknockout.sakura.ne.jp/bookmarkturbo.com/sql/insert.php',
@@ -103,7 +98,7 @@ function insertStack(user_id, name, this_callback)
 		error: ajaxError
 	});
 }
-function insertBook(user_id, name, stack_id, this_callback)
+function insertBook(name, stack_id, this_callback)
 {
 	this_callback = this_callback || function(){};
 	
@@ -111,7 +106,6 @@ function insertBook(user_id, name, stack_id, this_callback)
 		type: 'POST',
 		data: {
 			fn: 'book',
-			user_id:	user_id,
 			stack_id:	stack_id,
 			name:		name
 		},
@@ -129,7 +123,7 @@ function insertBook(user_id, name, stack_id, this_callback)
 		error: ajaxError
 	});
 }
-function insertBookmark(user_id, url, name, book_id, tags, comment, this_callback)
+function insertBookmark(url, name, book_id, tags, comment, this_callback)
 {
 	this_callback = this_callback || function(){};
 	
@@ -137,7 +131,6 @@ function insertBookmark(user_id, url, name, book_id, tags, comment, this_callbac
 		type: 'POST',
 		data: {
 			fn: 'bookmark',
-			user_id:	user_id,
 			url:		url,
 			name:		name,
 			book_id:	book_id,

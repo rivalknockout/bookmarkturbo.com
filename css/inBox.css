@@ -1,345 +1,216 @@
 @charset "UTF-8";
-#appBg{width: 100%; height: 100%;position: fixed;z-index: -99999;}
-#container{height: 100%;}
-.f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
-.f-Raleway{font-family: 'Raleway', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
-.t-shadow{text-shadow: 1px 1px 0px hsla(0, 0%, 0%, 0.1 ), 0 10px 10px hsla(0, 0%, 0%, .3);}
 /*----------------------------------------------------------*/
-/*	Basic structure
+/*	App 
 /*----------------------------------------------------------*/
-#status{
-	height: 65px;
-	white-space: nowrap;
-}
-#tag{
-	height: 60px;
-	padding: 0 40px;
-}
-#bookmark{
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 135px;
-	bottom: 57px;
-	padding: 0 40px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}/*no width:100% to padding. so moving to horizon be careful.*/
+	
+	#appBg{width: 100%; height: 100%;position: fixed;z-index: -99999;}
+	#container{height: 100%;}
+	
+/*----------------------------------------------------------*/
+/*	Basic
+/*----------------------------------------------------------*/
+	
+	header#status{height: 65px;white-space: nowrap;}
+	
+	#tag{height: 60px;padding: 0 40px;}
+	
+	/*dont use width:100% to padding. so moving to horizon be careful.*/
+	/* width:100%を使わないのは、paddingをもつため */
+	#bookmark{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 40px;/*top: 135px;*/
+		bottom: 57px;
+		padding: 0 40px;/*  */
+	}	
+	footer#bottom{}
+	
+/*----------------------------------------------------------*/
+/*	Icon ( to click )
+/*----------------------------------------------------------*/
 
-
-
+	.icon-edit	{width: 20px; height: 20px;}
+	.icon-delete{width: 18px; height: 18px;}
+	.icon-close	{width: 21px; height: 21px;}
+	
 /*----------------------------------------------------------*/
-/*	01.
+/*	01.App Header
 /*----------------------------------------------------------*/
-#status .app-title{
-	float: left;
-	width: 274px;
-	height: 100%;
-	/*backface-visibilityを有効にするために必要*/
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-}
-#status .app-title h1{
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: #5D5D5D;
-	text-align: center;
-	font-weight: normal;
-	font-size: 23px;
-	line-height: 67px;
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-}
-
-#status .app-title h1:nth-child(2){
-	-webkit-transform: rotateX(180deg);
-	-moz-transform: rotateX(180deg);
-}
-#status .cntbm-total,
-#status .cntbm-crrnt{
-	float: left;
-	padding-left: 37px;
-	padding-top: 18px;
-	font-size: 11px;
-}
-#status .cntbm-total dd,
-#status .cntbm-crrnt dd{letter-spacing: 1px;}
-
-/* 2013-03-18 */
-#status .useraccount{
-	position: absolute; right: 0; top: 0;
-	width: 200px;
-	height: 100%;
-}
-#status .useraccount .login{
-	padding-left: 37px;
-	padding-top: 18px;
-}
-
-
-/*----------------------------------------------------------*/
-/*	03.
-/*----------------------------------------------------------*/
-/*----------------------------------------------------------*/
-/*	場所:	.theme-ground .caption
-/*----------------------------------------------------------*/
-#bookmark .theme-ground .caption{
-	height: 53px;
-	line-height: 1.2em;
-	font-size: 53px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-}
-#bookmark .theme-ground .caption span{
-	display: inline-block;
-	/*x: white-space: nowrap;*/
-}
-#bookmark .theme-ground .caption span{
-	cursor: pointer;
-}
-#bookmark .theme-ground .caption .first{
-	z-index: 1;
-}
-	#bookmark .theme-ground .caption .first .icon-edit{
-		position: absolute; right: -30px; top: 10px; opacity: 0;
-		-webkit-transition:
-		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
-		-moz-transition:
-		 opacity 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+	
+	#status .app-title{
+		float: left;
+		width: 274px;
+		height: 100%;
 	}
+	#status .app-title h1{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		
+		font-size: 23px;
+		line-height: 67px;
+	}
+	#status .cntbm-total,
+	#status .cntbm-crrnt{
+		float: left;
+		padding-left: 37px;
+		padding-top: 18px;
+		font-size: 11px;
+	}
+	
+	/* 2013-03-18 */
+	#status .useraccount{
+		position: absolute; right: 0; top: 0;
+		width: 200px;
+		height: 100%;
+	}
+	#status .useraccount .login{
+		padding-left: 37px;
+		padding-top: 18px;
+	}
+	
+/*----------------------------------------------------------*/
+/*	03.Bookmark body ( App main area )
+/*----------------------------------------------------------*/
+/*----------------------------------------------------------*/
+/*	Caption
+/*----------------------------------------------------------*/
+	
+	/*** Icon ***/
+	
+	#bookmark .theme-ground .caption .first .icon-edit,
+	#bookmark .theme-ground .caption .first .icon-delete{
+		position: absolute; right: -30px; top: 10px;
+	}
+	#bookmark .theme-ground .caption .first .icon-delete{right: -54px}
+	
 	#bookmark .theme-ground.COMMON .caption .first .icon-edit,
-	#bookmark .theme-ground.PUBLIC .caption .first .icon-edit{
+	#bookmark .theme-ground.PUBLIC .caption .first .icon-edit,
+	#bookmark .theme-ground.COMMON .caption .first .icon-delete,
+	#bookmark .theme-ground.PUBLIC .caption .first .icon-delete{
 		display: none;
 	}
 	
-#bookmark .theme-ground .caption .third{
-	visibility: hidden;
-	min-width: 44%;
-}
-#bookmark .theme-ground .caption .second,
-#bookmark .theme-ground .caption .third{
-	position: absolute; top: 0; left: 60px;
-	opacity: 0;
-	-webkit-transition:
-	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-	-moz-transition:
-	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-#bookmark .theme-ground .caption strong{
-	color: #666;
-	font-weight: normal;
-}
-#bookmark .theme-ground.showingBookmark .caption .second{
-	visibility: hidden;
-	opacity: 0;
-	-webkit-transition:
-	 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
-	-moz-transition:
-	 opacity 2000ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-/* Last Child: add */
-#bookmark .theme-ground:last-child{
-	margin-top: 10px;
-	height: 50px;
-	cursor: pointer;
-}
-#bookmark .theme-ground:last-child img.icon-addstack{
-	left: -10px; opacity: 0; padding-right: 200px;
-	-webkit-transition:
-	 left 900ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 900ms cubic-bezier(0.19, 1, 0.22, 1);
-	-moz-transition:
-	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-#bookmark .theme-ground:last-child:hover img.icon-addstack{
-	left: 2px; opacity: .4;
-}
-
-
+	
+	
+	
+	
+	/*** Caption ***/
+	
+	#bookmark .theme-ground .caption{
+		height: 53px;
+		line-height: 1.2em;
+		font-size: 53px;
+	}
+	#bookmark .theme-ground .caption span{display: inline-block;}
+	
+	#bookmark .theme-ground .caption .third{min-width: 44%;}
+	
+	#bookmark .theme-ground .caption .second,
+	#bookmark .theme-ground .caption .third{
+		position: absolute; top: 0; left: 60px;
+	}
+	
+	
+	
+	
+	
+	/*** Last Child ( as Add ) ***/
+	
+	#bookmark .theme-ground:last-child{margin-top: 10px;height: 50px;}
+	#bookmark .theme-ground:last-child img.icon-addstack{left: -10px; padding-right: 200px;}
+	#bookmark .theme-ground:last-child:hover img.icon-addstack{left: 2px;}
+	
+	
+	
+	
+	
+	
+	
+	
 /*----------------------------------------------------------*/
-/*	場所:	.theme-ground .caption		★Toggle Effect...
+/*	Base rail
 /*----------------------------------------------------------*/
-/* Current: left0 */
-#bookmark .theme-ground.current .caption .first{
-	visibility: hidden;
-}
-#bookmark .theme-ground.current .caption .second{
-	left: 0;
-	opacity: 1;
-}
-/* Showing Bookmark */
-#bookmark .theme-ground.showingBookmark .caption .third{
-	visibility: visible;
-	left: 0;
-	opacity: 1;
-}
-
-
-/*x: Toggle Effect... Base-Rail 
-#bookmark .theme-ground .base-rail{
-	-webkit-transition:
-	 height 600ms cubic-bezier(0.19, 1, 0.22, 1);
-	-moz-transition:
-	 height 600ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-#bookmark .theme-ground.current .base-rail{
-	height: 50%;
-}
-*/
-
-
+	
+	#bookmark .base-rail-wrapper{
+		/* eventの座標を得るために必要 */
+		margin-left: -40px;
+		padding-left: 40px;
+		margin-right: -40px;
+		padding-right: 40px;
+	}
+	
+	
+	#bookmark .base-rail{
+		top: 16px; left: 0;
+		/* parentがleft0へアニメーション中に端が見きれるのを防ぐおまじない */
+		margin-left: -40px;
+		padding-left: 40px;
+		margin-right: -40px;
+		padding-right: 40px;
+	}
+	#bookmark .base-rail .parent >*{width: 200px; height: 110px;}
+	#bookmark .base-rail .parent >* img{position: absolute; display: block;}
+	#bookmark .base-rail .parent >* >p.name{
+		position: absolute; left: 0; right: 0; top: 50%;
+		height: 1em; margin-top: -.5em;
+	}
+	
+	
+	
+	
+	
+	
+	/*** Books ***/
+	
+	#bookmark .base-rail .books.parent >div{position: absolute;}
+	#bookmark .base-rail .books.parent >div img.icon-book{
+		width: 35px; height: 35px;
+		left: 50%; top: 50%;
+		margin-top: -30px; margin-left: -17px;
+	}
+	#bookmark .base-rail .books.parent >div >p.name{
+		margin-top: 4px;
+		font-size: 12px;
+	}
+	
+	
+	
+	
+	
+	/*** Bookmarks ***/
+	
+	#bookmark .base-rail .bookmarks.parent >a{position: absolute;}
+	#bookmark .base-rail .bookmarks.parent >a img.thumbnail,
+	#bookmark .base-rail .bookmarks.parent >a img.gloss{
+		left: 0; top: 0;
+		width: 100%;
+	}
+	#bookmark .base-rail .bookmarks.parent >a img.gloss{
+		height: 100%;
+	}
+	
+	
+	
+	
+	
+	
+	/*** Last child ( as Add     Bookmark & Book ) ***/
+	#bookmark .base-rail .books.parent >div:last-child img.icon-addbook,
+	#bookmark .base-rail .bookmarks.parent >a:last-child img.icon-addbookmark{
+		width: 35px; height: 35px;
+		left: 50%; top: 50%;
+		margin-top: -15px; margin-left: -17px;
+	}
+	
+	
+	
+	
 /*----------------------------------------------------------*/
-/*	場所:	.theme-ground .caption		★Hover Effect...
-/*----------------------------------------------------------*/
-/* Back To 'Book' */
-#bookmark .theme-ground.showingBookmark .caption:hover .third{
-	left: 20px;
-	opacity: .1;
-}
-#bookmark .theme-ground.showingBookmark .caption:hover .second{
-	visibility: visible;
-	opacity: .5;
-}
-/* Show Edit-icon */
-#bookmark .theme-ground .caption:hover .first .icon-edit{
-	opacity: 1;
-}
-
-
-
-/*----------------------------------------------------------*/
-/*	場所:	.theme-ground .base-rail以下
-/*----------------------------------------------------------*/
-/*----------------------------------------------------------*/
-/*	場所:	.theme-ground .base-rail
-/*
-/*	Parent　はrotateXする要素群の親
-/*	その親が複数あるのでそれをbase-railで基準を設けている
-/*	その外側にtheme-ground
-/*	#bookmark .theme-ground .base-rail .parent "rotateX(thumbnail)"
-/*----------------------------------------------------------*/
-#bookmark .base-rail{
-	top: 16px;
-	/* parentがleft0へアニメーション中に端が見きれるのを防ぐおまじない */
-	margin-left: -40px;
-	padding-left: 40px;
-	margin-right: -40px;
-	padding-right: 40px;
-	/* ここまで */
-	overflow-x: auto;
-}
-#bookmark .base-rail .parent >*{
-	box-shadow: 0 8px 20px rgba(0,0,0,.5);
-}
-#bookmark .base-rail .parent >* img{
-	position: absolute; display: block;
-}
-#bookmark .base-rail .parent >* >p.name{
-	position: absolute; left: 0; right: 0; top: 50%;
-	height: 1em; margin-top: -.5em;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	text-shadow: 1px 1px rgba(0,0,0,.6), 0 4px 4px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1);
-}
-/* Books */
-#bookmark .base-rail .books.parent >div{
-	position: absolute;
-	background: rgba(0,0,0,.1);
-	/* なぜ効かない？:
-	-webkit-transform: perspective(100);
-	-moz-transform: perspective(1000);*/
-	cursor: pointer;
-}
-#bookmark .base-rail .books.parent >div img.icon-book{
-	width: 35px; height: 35px;
-	left: 50%; top: 50%;
-	margin-top: -30px; margin-left: -17px;
-	opacity: .6;
-}
-#bookmark .base-rail .books.parent >div >p.name{
-	margin-top: 4px;
-	text-shadow: 1px 1px black, 0 5px 3px rgba(0,0,0,1);
-	font-size: 12px;
-}
-/* Bookmarks */
-#bookmark .base-rail .bookmarks.parent >a{
-	position: absolute;
-	background: rgba(0,0,0,.2);
-	/* なぜ効かない？:
-	-webkit-transform: perspective(100);
-	-moz-transform: perspective(1000);*/
-	cursor: pointer;
-	overflow: hidden;
-}
-#bookmark .base-rail .bookmarks.parent >a img.thumbnail,
-#bookmark .base-rail .bookmarks.parent >a img.gloss{
-	left: 0; top: 0;
-	width: 100%;
-}
-
-
-/* Toggle Effect... */
-#bookmark .base-rail .books.parent{
-	left: 60px; opacity: 0;
-	-webkit-transition:
-	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-	-moz-transition:
-	 left 600ms cubic-bezier(0.19, 1, 0.22, 1),
-	 opacity 600ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-#bookmark .base-rail .books.parent.left0{
-	left: 0px; opacity: 1;
-}
-
-
-/*濃#020911=hsl(212, 79%, 4%)　薄#121921=hsl(212, 29%, 5%)*/
-#bookmark .base-rail .books.parent >div{
-/* IE10 Consumer Preview */ 
-background-image: -ms-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
-/* Mozilla Firefox */ 
-background-image: -moz-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
-/* Opera */ 
-background-image: -o-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
-/* Webkit (Safari/Chrome 10) */ 
-background-image: -webkit-gradient(radial, center top, 0, center top, 553, color-stop(0, #3C4E69), color-stop(1, hsl(212, 79%, 4%)));
-/* Webkit (Chrome 11+) */ 
-background-image: -webkit-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myChrome*/
-/* W3C Markup, IE10 Release Preview */ 
-background-image: radial-gradient(ellipse farthest-corner at center top, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myMoz*/
-}
-
-
-/* Last child (as Add Bookmark or Book) */
-#bookmark .base-rail .parent >*:last-child{
-	box-shadow: none;
-background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, rgba(0,0,0,.3)), color-stop(0.00, rgba(0,0,0,0))) !important;
-background: -webkit-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
-background: -moz-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
-background: -o-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
-background: -ms-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
-background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
-}
-#bookmark .base-rail .books.parent >div:last-child img.icon-addbook,
-#bookmark .base-rail .bookmarks.parent >a:last-child img.icon-addbookmark{
-	width: 35px; height: 35px;
-	left: 50%; top: 50%;
-	margin-top: -15px; margin-left: -17px;
-	opacity: .2;
-}
-
-
-
-
-/*----------------------------------------------------------*/
-/*	場所:	.theme-ground .base-rail .parent div(a) .edit
+/*	Edit
 /*----------------------------------------------------------*/
 #bookmark .base-rail .parent >* .edit{
 	position: absolute; left: 0; top: 0;
@@ -355,10 +226,6 @@ background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
 }
 
 
-#bookmark .base-rail .parent >* .edit >img{
-	width: 21px; height: 21px;
-	cursor: pointer;
-}
 #bookmark .base-rail .parent >* .edit >.icon-edit{
 	display: block;
 	left: 6px; top: 6px;
@@ -368,7 +235,6 @@ background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
 }
 #bookmark .base-rail .parent >* .edit >.icon-delete{
 	right: 31px; top: 7px;
-	width: 18px; height: 18px;
 }
 #bookmark .base-rail .parent >* .edit select{
 	margin: 20px 20px 2px;
@@ -383,7 +249,7 @@ background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
 }
 
 
-/* Toggle... */
+/* --------------------------------------------------Toggle... */
 #bookmark .base-rail .parent >* .edit
 {
 	width: 32px;  height: 32px;
@@ -488,7 +354,7 @@ background: #4D4D4D;
 	padding-top: 157px;
 }
 
-/* Future */
+/* --------------------------------------------------Future */
 #config .future{
 	position: absolute; left: 450px; top: 0;
 	width: 550px; height: 450px;

@@ -1,0 +1,229 @@
+
+
+/*----------------------------------------------------------*/
+/*	Define
+/*----------------------------------------------------------*/
+	
+	.f-Josefin{font-family: 'Josefin Sans', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+	.f-Raleway{font-family: 'Raleway', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;}
+	.t-shadow{text-shadow: 1px 1px 0px hsla(0, 0%, 0%, 0.1 ), 0 10px 10px hsla(0, 0%, 0%, .3);}
+	
+/*----------------------------------------------------------*/
+/*	Basic
+/*----------------------------------------------------------*/
+	
+	#bookmark{overflow-y: auto;overflow-x: hidden;}
+	
+/*----------------------------------------------------------*/
+/*	Icon ( to click )
+/*----------------------------------------------------------*/
+	
+	.icon-edit, .icon-delete, .icon-close{cursor: pointer;}
+	
+/*----------------------------------------------------------*/
+/*	01.App Header
+/*----------------------------------------------------------*/
+	
+	#status .app-title{
+		/*backface-visibilityを有効にするために必要*/
+		-webkit-transform-style: preserve-3d;
+		-moz-transform-style: preserve-3d;
+	}
+	
+	#status .app-title h1{
+		background: #5D5D5D;
+		text-align: center;
+		font-weight: normal;
+		
+		-webkit-backface-visibility: hidden;
+		-moz-backface-visibility: hidden;
+	}
+	#status .app-title h1:nth-child(2){
+		-webkit-transform: rotateX(180deg);
+		-moz-transform: rotateX(180deg);
+	}
+	
+	#status .cntbm-total dd,
+	#status .cntbm-crrnt dd{letter-spacing: 1px;}
+	
+/*----------------------------------------------------------*/
+/*	03.Bookmark body ( App main area )
+/*----------------------------------------------------------*/
+/*----------------------------------------------------------*/
+/*	Caption
+/*----------------------------------------------------------*/
+	
+	/*** Icon ***/
+	
+	#bookmark .theme-ground .caption .first .icon-edit,
+	#bookmark .theme-ground .caption .first .icon-delete{
+		opacity: 0;
+	}
+	
+	
+	
+	
+	/*** Caption ***/
+	
+	#bookmark .theme-ground .caption{
+		-webkit-user-select: none;
+		-moz-user-select: none;
+	}
+	#bookmark .theme-ground .caption span{cursor: pointer;}
+	#bookmark .theme-ground .caption .first{z-index: 1;}
+	#bookmark .theme-ground .caption .second,
+	#bookmark .theme-ground .caption .third{opacity: 0;}
+	#bookmark .theme-ground .caption .third{visibility: hidden;}
+	
+	#bookmark .theme-ground .caption strong{color: #666;font-weight: normal;}
+	
+	
+	#bookmark .theme-ground.showingBookmark .caption .second{visibility: hidden;opacity: 0;}
+	
+	
+	
+	
+	/*** Last Child ( as Add ) ***/
+	
+	#bookmark .theme-ground:last-child{cursor: pointer;}
+	#bookmark .theme-ground:last-child img.icon-addstack{opacity: 0;}
+	#bookmark .theme-ground:last-child:hover img.icon-addstack{opacity: .4;}
+	
+	
+	
+	
+	
+/*----------------------------------------------------------*/
+/*	Base rail
+/*----------------------------------------------------------*/
+	
+	#bookmark .base-rail{overflow-x: visible;/*x:auto*/}
+	#bookmark .base-rail .parent >*{box-shadow: 0 8px 20px rgba(0,0,0,.5);}
+	#bookmark .base-rail .parent >* >p.name{
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		text-shadow: 1px 1px rgba(0,0,0,.6), 0 4px 4px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1);
+	}
+	
+	
+	
+	
+	
+	/*** Books ***/
+	
+	#bookmark .base-rail .books.parent >div{
+		background-color: rgba(0,0,0,.1);
+		/* なぜ効かない？:
+		-webkit-transform: perspective(100);
+		-moz-transform: perspective(1000);*/
+		cursor: pointer;
+		
+		
+		/*濃#020911=hsl(212, 79%, 4%)　薄#121921=hsl(212, 29%, 5%)*/
+		/* IE10 Consumer Preview */ 
+		background-image: -ms-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+		/* Mozilla Firefox */ 
+		background-image: -moz-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+		/* Opera */ 
+		background-image: -o-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);
+		/* Webkit (Safari/Chrome 10) */ 
+		background-image: -webkit-gradient(radial, center top, 0, center top, 553, color-stop(0, #3C4E69), color-stop(1, hsl(212, 79%, 4%)));
+		/* Webkit (Chrome 11+) */ 
+		background-image: -webkit-radial-gradient(center top, ellipse farthest-corner, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myChrome*/
+		/* W3C Markup, IE10 Release Preview */ 
+		background-image: radial-gradient(ellipse farthest-corner at center top, #3C4E69 0%, hsl(212, 79%, 4%) 100%);/*myMoz*/
+	}
+	
+	#bookmark .base-rail .books.parent >div img.icon-book{opacity: .6;}
+	
+	#bookmark .base-rail .books.parent >div >p.name{
+		text-shadow: 1px 1px black, 0 5px 3px rgba(0,0,0,1);
+	}
+	
+	
+	
+	
+	
+	/*** Bookmarks ***/
+	
+	#bookmark .base-rail .bookmarks.parent >a{
+		background: rgba(0,0,0,.2);
+		/* なぜ効かない？:
+		-webkit-transform: perspective(100);
+		-moz-transform: perspective(1000);*/
+		cursor: pointer;
+		overflow: hidden;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/*** Last child ( as Add     Bookmark & Book ) ***/
+	#bookmark .base-rail .parent >*:last-child{
+		box-shadow: none;
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, rgba(0,0,0,.3)), color-stop(0.00, rgba(0,0,0,0))) !important;
+		background: -webkit-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+		background: -moz-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+		background: -o-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+		background: -ms-linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+		background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,0)) !important;
+	}
+	
+	#bookmark .base-rail .books.parent >div:last-child img.icon-addbook,
+	#bookmark .base-rail .bookmarks.parent >a:last-child img.icon-addbookmark{opacity: .2;}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

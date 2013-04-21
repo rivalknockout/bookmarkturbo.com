@@ -1,11 +1,11 @@
 
 
-function openThemeGround()
+function openThemeGround_Handler()
 {
-	var $thisFirst	= $(this);
+	var $this			= $(this);//#bookmark .first
 	
-	var $themeGround	= $thisFirst.parent().parent();
-	var $baseRail		= $('.base-rail', $themeGround);
+	var $themeGround	= $this.closest('.theme-ground');
+	var $baseRail		= $themeGround.find('.base-rail');
 	
 	var stackObject	= $themeGround.data('stackObject');
 	
@@ -13,8 +13,14 @@ function openThemeGround()
 	var EASE		= 'easeOutExpo';
 	
 	
+	// Tmp create ( to Slide event. )( remove, when this close. )
+	$baseRail.wrap('<div class="base-rail-wrapper"></div>');
+	
+	
+	
+	
 	//	Exist Books...?
-	if( $('.books.parent', $baseRail).length == 0 )
+	if( $baseRail.find('.books.parent').length == 0 )
 	{
 		console.log(' Will Create Book Parent... ');
 		
@@ -22,14 +28,14 @@ function openThemeGround()
 		
 		$parent
 			.find('>div')
-			.adjustWH()
+			//x:.adjustWH()
 			.adjustM()
 			.adjustTwoLines();
 	}
 	
 	
 	//	排他的処理
-	closeThemeGround();
+	closeThemeGround_Handler();
 	
 	
 	//	Done...
@@ -38,27 +44,32 @@ function openThemeGround()
 	
 	
 }
-function closeThemeGround()
+function closeThemeGround_Handler()
 {
 	var SPEED		= 600;
 	var EASE		= 'easeOutExpo';
 	
-	$('#bookmark .theme-ground.current').removeClass('current').removeClass('showingBookmark')
-		.find('.base-rail').closeRail(SPEED, EASE);
+	$('#bookmark .theme-ground.current')
+	.removeClass('current')
+	.removeClass('showingBookmark')
+		.find('.base-rail')
+		.unwrap()
+		.closeRail(SPEED, EASE);
+	
 }
 
 
 
-function showBookMarks()
+function showBookMarks_Handler()
 {
-	var $thisBook		= $(this);
-	var bookObject		= $thisBook.data('bookObject');
-	if(bookObject === undefined)
+	var $this			= $(this);//#bookmark .books.parent .child:not(.add)
+	var bookObject		= $this.data('bookObject');
+	if( bookObject===undefined )
 		return;
 	
-	var $bookParent		= $thisBook.parent();
-	var $baseRail		= $bookParent.parent();
-	var $themeGround	= $baseRail.parent();
+	var $bookParent		= $this.closest('.parent');
+	var $baseRail		= $bookParent.closest('.base-rail');
+	var $themeGround	= $baseRail.closest('.theme-ground');
 	
 	
 	//	Exist Bookmarks...?
@@ -70,7 +81,7 @@ function showBookMarks()
 		
 		$parent
 			.find('>a')
-			.adjustWH()
+			//x:.adjustWH()
 			.adjustM()
 			.adjustTwoLines()
 			
@@ -96,10 +107,10 @@ function showBookMarks()
 }
 
 
-function backToBook()
+function backToBook_Handler()
 {
 	var $thisThird		= $(this);
-	var $themeGround	= $thisThird.parent().parent();
+	var $themeGround	= $thisThird.closest('.theme-ground');
 	var $baseRail		= $themeGround.find('.base-rail');
 	
 	
@@ -119,25 +130,26 @@ function backToBook()
 
 
 //	icon < edit < child
-function openEdit_child()
+function openEdit_child_Handler()
 {
 	var $iconEdit = $(this);
 	
-	$iconEdit.parent().parent().addClass('editing');
-	$iconEdit.parent().find('.icon-edit').hide();
+	$iconEdit.hide()
+	.closest('.child').addClass('editing');
+	
 	setTimeout(function()
 	{
-		$iconEdit.parent().find('*:not(.icon-edit)').stop(true, true).fadeIn(600);
+		$iconEdit.closest('.edit').find('*:not(.icon-edit)').stop(true, true).fadeIn(600);
 	}, 300);
 	return false;
 }
-function closeEdit_child()
+function closeEdit_child_Handler()
 {
 	var $iconClose = $(this);
 	
-	$iconClose.parent().parent().removeClass('editing');
-	$iconClose.parent().find('*').hide();
-	$iconClose.parent().find('.icon-edit').stop(true, true).fadeIn(600);
+	$iconClose.closest('.child').removeClass('editing');
+	$iconClose.closest('.edit').find('*').hide();
+	$iconClose.closest('.edit').find('.icon-edit').stop(true, true).fadeIn(600);
 	return false;
 }
 
@@ -148,12 +160,19 @@ function closeEdit_child()
 
 $.fn.openRail = function(SPEED, EASE)
 {
-	var $baseRail = $(this);
+	var $baseRail = $(this); var YOHAKU = 20; 
+	var $child = $baseRail.find('>.parent>.child');
+	var height = 
+	(
+	parseInt( $child.css('height') )+
+	parseInt( $child.css('margin-bottom') )
+	)*2 +YOHAKU;
+	
 	
 	//	Done...
 	$baseRail
 	.show()
-	.animate({ height: window.innerHeight*.4 }, SPEED, EASE);
+	.animate({ height: height }, SPEED, EASE);
 	setTimeout(function(){
 		
 		//	BookParent Animation...

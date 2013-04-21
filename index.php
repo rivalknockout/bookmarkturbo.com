@@ -17,14 +17,16 @@ if($isLogin)
 	<link href='//fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'>
 	<link href="css/reset.v1.0.css" rel="stylesheet" type="text/css">
 	<link href="css/inBox.css" rel="stylesheet" type="text/css">
+	<link href="css/design.css" rel="stylesheet" type="text/css">
+	<link href="css/transit.css" rel="stylesheet" type="text/css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script>
 		var commonData	= <?php echo json_encode($_SESSION['appData']['commonData']);?>;
 		var accountData = null;
-		var user_id		= null;
+		var isLogin		= false;
 	<?php if($isLogin): ?>
 		accountData	= <?php echo json_encode($_SESSION['appData']['accountData']);?>;
-		user_id		= <?php echo $_SESSION['user_id'];?>;
+		isLogin		= true;
 	<?php endif; ?>
 	</script>
 </head>
@@ -34,7 +36,8 @@ if($isLogin)
 <div id="container">
 	<!-- 01.show application title, user's BM count, and more... -->
 	<header id="status">
-		<!-- 01-01. -->
+		<!--
+		<!-- 01-01. --
 		<div class="app-title color-white f-Josefin">
 			<h1>BOOKMARK TURBO</h1>
 			<h1>hoge</h1>
@@ -50,6 +53,7 @@ if($isLogin)
 		<div>
 			<p class="clock"></p>
 		</div>
+		-->
 		<div class="useraccount">
 		<? if($isLogin): ?>
 			<p class="login"><?php echo $_SESSION['user_name'] ?></p>
@@ -69,7 +73,7 @@ if($isLogin)
 		//	共通
 		//---------------------------------------------------------------------------
 		var className = 'COMMON ';
-		if(!user_id) className+=' ini-open';
+		if(!isLogin) className+=' ini-open';
 		
 		if(typeof commonData == 'object')
 			for(i in commonData)
@@ -77,7 +81,7 @@ if($isLogin)
 		//---------------------------------------------------------------------------
 		//	アカウント
 		//---------------------------------------------------------------------------
-		if(user_id)
+		if(isLogin)
 		{
 			if(typeof accountData == 'object')
 				for(i in accountData)
@@ -101,7 +105,7 @@ if($isLogin)
 	</div>
 </div>
 <footer id="bottom">
-<?php if($_SESSION['user_id']): ?>
+<?php if( $isLogin ): ?>
 	<a href="logout.php" class="moveLogout">ログアウト</a>
 <?php endif; ?>
 </footer>
@@ -147,9 +151,9 @@ if($isLogin)
 				<ul>
 					<li class="green">ブックマークレットの提供</li>
 					<li class="green">オートコンプリート</li>
-					<li class="yellow">削除、変更機能</li>
-					<li class="yellow">ユーザ情報の編集</li>
+					<li class="green">削除、変更機能</li>
 					<li class="yellow">横スクロールの使いづらさを解消</li>
+					<li class="yellow">ユーザ情報の編集</li>
 					<li class="red">CSVでインポート、エクスポートできる</li>
 					<li class="red">スタック・ブック・ブックマークの並び替え</li>
 					<li class="red">フリーワード検索機能（エゴサーチ）</li>
@@ -209,6 +213,8 @@ if($isLogin)
 <script src="js/manage_inThemeGround.js"></script>
 <script src="js/controller.js"></script>
 <script src="js/create.js"></script>
+<script src="js/transit.js"></script>
+<script src="js/event.js"></script>
 <script src="js/ajax.js"></script>
 
 <script src="js/inBox.js"></script>

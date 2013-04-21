@@ -1,5 +1,7 @@
 (function($)
 {
+	//ローディングgifのようなものを表示する
+	//プラグイン：floatingBarsG	on reset.css v1.0
 	$.fn.loadingCSS = function(left, top)
 	{
 		var left = left || '50%', top = top || '50%';
@@ -17,5 +19,21 @@
 		return this;
 	}
 	
+	/*x:車輪の再発明
+	//.find()の親探索版
+	$.fn.findp = function( selector )
+	{
+		$this = $(this);
+		
+		for(var i=0; i<100; i++)
+		{
+			$this = $this.parent();
+			if( $this.is( selector ) ) break;
+			
+		}
+		
+		return $this;
+	}
+	*/
 	
 })(jQuery);
